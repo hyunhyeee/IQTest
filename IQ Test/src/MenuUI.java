@@ -29,9 +29,9 @@ public class MenuUI extends JFrame {
     	btn2.setBounds(200, 120,500, 60);
     	btn3.setBounds(200, 190, 500, 60);
     	
-    	c.add(btn1);
-    	c.add(btn2);
-    	c.add(btn3);
+//    	c.add(btn1);
+//    	c.add(btn2);
+//    	c.add(btn3);
     	
     	f.setVisible(true);
     }
