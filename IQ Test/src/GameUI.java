@@ -1,5 +1,6 @@
+// 기본적인 메인 화면 구상 완료
+
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -8,23 +9,26 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class GameUI {
+public class GameUI extends JFrame {
 	
 	private JTextArea t_display;
 	private JTextField t_input;
-	private JButton b_send;
 	
 	public GameUI() {
 		
-    	JFrame f = new JFrame();
-    	
-		f.setTitle("Object Talk");
+		buildGUI();
 		
-		f.setSize(500, 300);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
+		setSize(800,600);
+    	setTitle("메뉴 화면 구성");
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	setVisible(true);
 	}
-
+	
+	private void buildGUI() {
+		add(createDisplayPanel(), BorderLayout.CENTER);
+		add(createInputPanel(), BorderLayout.SOUTH);
+	}
+	
 	private JPanel createDisplayPanel() {
 		JPanel p = new JPanel(new BorderLayout());
 		
@@ -40,16 +44,16 @@ public class GameUI {
 		JPanel p = new JPanel(new BorderLayout());
 		
 		t_input = new JTextField(30);
-		b_send = new JButton("보내기");
+		JButton b_send = new JButton("보내기");
 		
 		p.add(t_input, BorderLayout.CENTER);
 		p.add(b_send, BorderLayout.EAST);
 		
-		t_input.setEnabled(true);
-		b_send.setEnabled(true);
+//		t_input.setEnabled(true);
+//		b_send.setEnabled(true);
 		
 		return p;
-	}
+			}
 	
     public static void main(String[] args) {
         new GameUI();
