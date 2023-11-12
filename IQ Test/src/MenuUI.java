@@ -1,4 +1,4 @@
-// 메뉴 화면 구성 완료
+// 객지 메뉴 화면 구성 완료
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,7 +29,7 @@ public class MenuUI extends JFrame {
 		title.setFont(new Font(labelFont.getName(), Font.PLAIN, 30));
 		add(title);
 		
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/mountain.png");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/java_pic.jpg");
 		backgroundPanel.setSize(new Dimension(1000, 700));
 		add(backgroundPanel);
     	

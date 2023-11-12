@@ -31,7 +31,7 @@ public class StartUI extends JFrame {
 		title.setFont(new Font(labelFont.getName(), Font.PLAIN, 50));
 		add(title);
 
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/mountain.png");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/java_pic.jpg");
 		backgroundPanel.setSize(new Dimension(1000, 700));
 		add(backgroundPanel);
 
