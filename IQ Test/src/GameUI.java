@@ -53,7 +53,7 @@ public class GameUI extends JFrame {
 //		b_send.setEnabled(true);
 		
 		return p;
-			}
+	}
 	
     public static void main(String[] args) {
         new GameUI();
