@@ -1,4 +1,4 @@
-// 기본적인 메인 화면 구상 완료
+// 기본적인 메인 화면 구상 완료 - 패널 붙이기
 
 import java.awt.BorderLayout;
 
