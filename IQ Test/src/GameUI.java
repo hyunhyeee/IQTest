@@ -15,11 +15,11 @@ public class GameUI extends JFrame {
 	private JTextField t_input;
 	
 	public GameUI() {
+		super("게임 메인 화면 구성");
 		
 		buildGUI();
 		
 		setSize(800,600);
-    	setTitle("메뉴 화면 구성");
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	setVisible(true);
 	}

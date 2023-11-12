@@ -16,11 +16,11 @@ public class GameOverUI extends JFrame {
 	private JTextField t_input;
 	
 	public GameOverUI() {
+		super("게임 종료 화면 구성");
 		
 		buildGUI();
 		
 		setSize(800,600);
-    	setTitle("메뉴 화면 구성");
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	setVisible(true);
 	}
