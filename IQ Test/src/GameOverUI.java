@@ -1,6 +1,7 @@
 // 기본적인 게임 종료 화면 구상 완료
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -46,6 +47,9 @@ public class GameOverUI extends JFrame {
 		
 		JButton b_restart = new JButton("재시작하기");
 		JButton b_exit = new JButton("나가기");
+		
+        b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
+        b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));
 		
 		p.add(b_restart);
 		p.add(b_exit);

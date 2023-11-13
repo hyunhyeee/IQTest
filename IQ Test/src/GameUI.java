@@ -1,6 +1,7 @@
 // 기본적인 메인 화면 구상 완료
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,6 +46,8 @@ public class GameUI extends JFrame {
 		
 		t_input = new JTextField(30);
 		JButton b_send = new JButton("보내기");
+		
+		b_send.setPreferredSize(new Dimension(b_send.getPreferredSize().width, 40));
 		
 		p.add(t_input, BorderLayout.CENTER);
 		p.add(b_send, BorderLayout.EAST);
