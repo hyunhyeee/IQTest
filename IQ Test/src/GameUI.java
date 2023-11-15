@@ -3,10 +3,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -47,6 +44,7 @@ public class GameUI extends JFrame {
 		add(createInputPanel(), BorderLayout.SOUTH);
 		add(createQuestionPanel(), BorderLayout.CENTER);
 		add(addProgressBar(), BorderLayout.NORTH);
+		game1_CalcRandom();
 
 	}
 
@@ -159,73 +157,18 @@ public class GameUI extends JFrame {
 
 	// 산술 문제시 랜덤 값 설정
 	public void game1_CalcRandom() {
-		// 숫자 랜덤 범위 코드 예시 1
-		Random random = new Random(System.nanoTime());
-		List<Integer> result = new ArrayList<Integer>();
-		int num;
-		for (int i = 0; i < 6; i++) {
-			while (true) {
-				num = random.nextInt(20) + 1;
-				if (result.contains(num)) {
-					continue;
-				} else {
-					result.add(num);
-					System.out.print(num + " ");
-					break;
-				}
+		Random rand = new Random();
 
-			}
+		int num1 = rand.nextInt(20);
+		int num2 = rand.nextInt(20);
 
-		}
+		String[] operators = { "+", "-", "*", "/" };
+		String operator1 = operators[rand.nextInt(operators.length)];
 
-		// 예시 2
-		int score = 0;
-		while (true) {
-
-			double random1 = Math.random();
-			double random2 = Math.random();
-
-			int num1 = (int) (random1 * 20) + 1;
-			int num2 = (int) (random1 * 20) + 1;
-			int sign = (int) (random1 * 4) + 1;
-
-			int result1 = 0;
-
-			switch (sign) {
-			case 1:
-				result1 = num1 + num2;
-				System.out.println(num1 + " + " + num2 + "=?");
-				break;
-			case 2:
-				result1 = num1 - num2;
-				System.out.println(num1 + " - " + num2 + "=?");
-				break;
-			case 3:
-				result1 = num1 * num2;
-				System.out.println(num1 + " * " + num2 + "=?");
-				break;
-			case 4:
-				result1 = num1 / num2;
-				System.out.println(num1 + " / " + num2 + "=?");
-				break;
-			}
-
-			Scanner sc = new Scanner(System.in);
-			int ans = sc.nextInt();
-
-			if (ans == result1) {
-				score = score + 1;
-				System.out.println("correct");
-			} else {
-				System.out.println("Wrong");
-			}
-
-			if (score >= 10) {
-				break;
-			}
-
-		}
-
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
 	}
 
 
