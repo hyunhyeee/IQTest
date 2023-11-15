@@ -1,6 +1,5 @@
 // 객지 게임 시작화면 구현 완료
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,29 +23,26 @@ public class StartUI extends JFrame {
 		setLayout(null);
 
 		JLabel title = new JLabel("당신의 지능은 몇살인가요?");
-		title.setBounds(190, 150, 1000, 100);
+		title.setBounds(110, 150, 1000, 100);
 		title.setForeground(Color.BLACK);
 
 		Font labelFont = title.getFont();
 		title.setFont(new Font(labelFont.getName(), Font.PLAIN, 50));
 		add(title);
 
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/java_pic.jpg");
-		backgroundPanel.setSize(new Dimension(1000, 700));
-		add(backgroundPanel);
-
-		
-		
 		JButton s_Button = new JButton("시작하기");
-		s_Button.setBounds(650, 370, 150, 50);
+		s_Button.setBounds(585, 370, 150, 50);
 		add(s_Button);
-		
+
 		Font buttonFont = s_Button.getFont();
 		s_Button.setFont(new Font(buttonFont.getName(), Font.BOLD, 20));
 
-		
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/java_pic.jpg");
+		backgroundPanel.setSize(new Dimension(800, 600));
+		add(backgroundPanel);
+
 		setTitle("지능테스트 첫 화면");
-		setSize(1000, 700);
+		setSize(800, 600);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
@@ -55,10 +51,10 @@ public class StartUI extends JFrame {
 	}
 
 
-	// Custom JPanel to display an image
 	class ImagePanel extends JPanel {
 		private ImageIcon imageIcon;
-		
+
+
 		public ImagePanel(String imagePath) {
 			imageIcon = new ImageIcon(getClass().getResource(imagePath));
 		}

@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Random;
+import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -19,6 +21,10 @@ public class GameUI extends JFrame {
 	private JTextArea t_display;
 	private JTextField t_input;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result; // 산술 문제 출제란
+
+	private JLabel timerLabel;
+	private Timer timer;
+	private int count = 5; // 초기 카운트 값
 
 
 	public GameUI() {
@@ -51,7 +57,10 @@ public class GameUI extends JFrame {
 		add(createDisplayPanel());
 		add(createInputPanel(), BorderLayout.SOUTH);
 		add(createQuestionPanel(), BorderLayout.CENTER);
-		game1_CalcRandom();
+
+		add(addProgressBar(), BorderLayout.NORTH);
+		game9_10_CalcRandom();
+
 	}
 
 
@@ -62,9 +71,29 @@ public class GameUI extends JFrame {
 		t_display.setEditable(false);
 
 		p.add(new JScrollPane(t_display), BorderLayout.CENTER);
+		// JLabel levelLabel = new JLabel("Level 1");
+		// levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
+		// levelLabel.setBounds(26, 10, 130, 84);
+		// add(levelLabel);
 		return p;
 	}
 
+	private JPanel addProgressBar() {
+
+		JPanel topPanel = new JPanel(new BorderLayout());
+		JLabel levelLabel = new JLabel("Level 1");
+		levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
+
+		// progressBar = new JProgressBar(0, totalLevels);
+		// progressBar.setStringPainted(true);
+		// progressBar.setValue(currentLevel);
+		//
+		// topPanel.add(levelLabel, BorderLayout.WEST);
+		// topPanel.add(progressBar, BorderLayout.CENTER);
+		// add(topPanel, BorderLayout.NORTH);
+
+		return topPanel;
+	}
 
 	private JPanel createInputPanel() {
 		JPanel p = new JPanel(new BorderLayout());
@@ -137,20 +166,92 @@ public class GameUI extends JFrame {
 	// 한 문제 맞출때 마다 5씩 증가
 	// 난이도 별 랜덤 범위 설정
 
+	// 1~3, 4~5, 6~8, 9~10, 4구역으로 나누기
+	// 1~3은 한자리수의 + -
+	// 4~5는 한자리수의 *
+	// 6~8은 두자리수의 + -
+	// 9~10은 두자리수의 * /
 
-	// 산술 문제시 랜덤 값 설정
-	public void game1_CalcRandom() {
+
+	// 레벨 1~3
+	public void game1_3_CalcRandom() {
 		Random rand = new Random();
 
-		int num1 = rand.nextInt(20);
-		int num2 = rand.nextInt(20);
+		int num1 = rand.nextInt(9) + 1;
+		int num2 = rand.nextInt(9) + 1;
 
-		String[] operators = { "+", "-", "*", "/" };
+		String[] operators = { "+", "-" };
 		String operator1 = operators[rand.nextInt(operators.length)];
 
 		t_operand1.setText(String.valueOf(num1));
 		t_operand2.setText(String.valueOf(num2));
 		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 4~5
+	public void game4_5_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(9) + 1;
+		int num2 = rand.nextInt(9) + 1;
+
+		String operators = "*";
+		String operator1 = operators;
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 6~8
+	public void game6_8_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(20) + 1;
+		int num2 = rand.nextInt(20) + 1;
+
+		String[] operators = { "+", "-" };
+		String operator1 = operators[rand.nextInt(operators.length)];
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 9~10
+	public void game9_10_CalcRandom() {
+		Random rand = new Random();
+		int num1 = rand.nextInt(35) + 1;
+		int num2 = rand.nextInt(35) + 1;
+
+		String[] operators = { "*", "/" };
+		String operator = operators[rand.nextInt(operators.length)];
+
+		int result = 0;
+		if (operator.equals("/")) {
+			while (num1 <= num2) {
+				num1 = rand.nextInt(150) + 1;
+				num2 = rand.nextInt(15) + 1;
+			}
+
+			if (num1 % num2 != 0) {
+				num1 -= num1 % num2;
+			}
+
+			result = num1 / num2;
+		} else {
+			result = num1 * num2;
+		}
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator);
 		t_result.setText("?");
 	}
 

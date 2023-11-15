@@ -7,16 +7,18 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 
 public class GameOverUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_input;
+	private JLabel resultNum, resultStr;
 
 
 	public GameOverUI() {
@@ -35,18 +37,17 @@ public class GameOverUI extends JFrame {
 
 
 	private void buildGUI() {
-		add(createDisplayPanel(), BorderLayout.CENTER);
+		add(createDisplayPanel());
+		add(createResultPanel());
 		add(createInputPanel(), BorderLayout.SOUTH);
 	}
 
 
 	private JPanel createDisplayPanel() {
-		JPanel p = new JPanel(new BorderLayout());
+		JPanel p = new JPanel(null);
 
 		t_display = new JTextArea();
 		t_display.setEditable(false);
-
-		p.add(new JScrollPane(t_display), BorderLayout.CENTER);
 
 		return p;
 	}
@@ -67,6 +68,27 @@ public class GameOverUI extends JFrame {
 		Font buttonFont = b_restart.getFont();
 		b_restart.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
 		b_exit.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+
+		return p;
+	}
+
+
+	private JPanel createResultPanel() {
+		JPanel p = new JPanel(null);
+		resultNum = new JLabel("최종 점수 \" \" 점");
+		resultStr = new JLabel("오!! 당신은 범고래와 똑같은 지능이군요");
+
+		resultNum.setFont(new Font("굴림", Font.BOLD, 35));
+		resultStr.setFont(new Font("굴림", Font.BOLD, 23));
+
+		resultNum.setHorizontalAlignment(SwingConstants.CENTER);
+		resultStr.setHorizontalAlignment(SwingConstants.CENTER);
+
+		resultNum.setBounds(149, 209, 471, 87);
+		resultStr.setBounds(159, 288, 453, 63);
+
+		p.add(resultNum);
+		p.add(resultStr);
 
 		return p;
 	}
