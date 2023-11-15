@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,8 +45,37 @@ public class _02MenuUI extends JFrame {
 
 	private void buildGUI() {
 		JButton btn1 = new JButton("산술문제");
+		btn1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_03GameUI T_Frame = new _03GameUI();
+				T_Frame.setVisible(true);
+				dispose();
+			}
+		});
+		pack();
+
 		JButton btn2 = new JButton("속담 맞추기");
+		btn2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_03GameUI T_Frame = new _03GameUI();
+				T_Frame.setVisible(true);
+				dispose();
+			}
+		});
+		pack();
+
 		JButton btn3 = new JButton("상식 테스트");
+		btn3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_03GameUI T_Frame = new _03GameUI();
+				T_Frame.setVisible(true);
+				dispose();
+			}
+		});
+		pack();
 
 		btn1.setBounds(150, 150, 500, 60);
 		add(btn1);

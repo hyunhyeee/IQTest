@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,12 +32,21 @@ public class _01StartUI extends JFrame {
 		title.setFont(new Font(labelFont.getName(), Font.PLAIN, 50));
 		add(title);
 
-		JButton s_Button = new JButton("시작하기");
-		s_Button.setBounds(585, 370, 150, 50);
-		add(s_Button);
+		JButton s_button = new JButton("시작하기");
+		s_button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_02MenuUI secondFrame = new _02MenuUI();
+				secondFrame.setVisible(true);
+				dispose();
+			}
+		});
+		pack();
+		s_button.setBounds(585, 370, 150, 50);
+		add(s_button);
 
-		Font buttonFont = s_Button.getFont();
-		s_Button.setFont(new Font(buttonFont.getName(), Font.BOLD, 20));
+		Font buttonFont = s_button.getFont();
+		s_button.setFont(new Font(buttonFont.getName(), Font.BOLD, 20));
 
 		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/java_pic.jpg");
 		backgroundPanel.setSize(new Dimension(800, 600));
@@ -48,6 +59,7 @@ public class _01StartUI extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+
 	}
 
 
