@@ -7,9 +7,7 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -21,11 +19,6 @@ public class GameUI extends JFrame {
 	private JTextArea t_display;
 	private JTextField t_input;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result; // 산술 문제 출제란
-	private JProgressBar progressBar;
-	private JButton levelCompleteButton;
-
-	private int currentLevel = 0;
-	private final int totalLevels = 10;
 
 
 	public GameUI() {
@@ -40,16 +33,25 @@ public class GameUI extends JFrame {
 		setResizable(false);
 
 		setVisible(true);
+		
 	}
 
 
 	private void buildGUI() {
+		
+		JButton levelCompleteButton = new JButton("다음->");
+		levelCompleteButton.setBounds(530, 380, 150, 60);
+        add(levelCompleteButton);
+        levelCompleteButton.setEnabled(false);
+        
+        
+        Font buttonFont = levelCompleteButton.getFont();
+        levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+        
 		add(createDisplayPanel());
 		add(createInputPanel(), BorderLayout.SOUTH);
 		add(createQuestionPanel(), BorderLayout.CENTER);
-		add(addProgressBar(), BorderLayout.NORTH);
 		game1_CalcRandom();
-
 	}
 
 
@@ -60,30 +62,7 @@ public class GameUI extends JFrame {
 		t_display.setEditable(false);
 
 		p.add(new JScrollPane(t_display), BorderLayout.CENTER);
-
-		// JLabel levelLabel = new JLabel("Level 1");
-		// levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
-		// levelLabel.setBounds(26, 10, 130, 84);
-		// add(levelLabel);
 		return p;
-	}
-
-
-	private JPanel addProgressBar() {
-
-		JPanel topPanel = new JPanel(new BorderLayout());
-		JLabel levelLabel = new JLabel("Level 1");
-		levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
-
-//		progressBar = new JProgressBar(0, totalLevels);
-//		progressBar.setStringPainted(true);
-//		progressBar.setValue(currentLevel);
-//
-//		topPanel.add(levelLabel, BorderLayout.WEST);
-//		topPanel.add(progressBar, BorderLayout.CENTER);
-//		add(topPanel, BorderLayout.NORTH);
-
-		return topPanel;
 	}
 
 
