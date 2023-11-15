@@ -2,6 +2,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -53,6 +54,10 @@ public class GameOverUI extends JFrame {
 		
 		p.add(b_restart);
 		p.add(b_exit);
+		
+		Font buttonFont = b_restart.getFont();
+		b_restart.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+		b_exit.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
 		
 		return p;
 			}
