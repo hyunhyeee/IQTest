@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class MenuUI extends JFrame {
+public class _02MenuUI extends JFrame {
 
-	public MenuUI() {
+	public _02MenuUI() {
 
 		buildGUI();
 
@@ -78,6 +78,6 @@ public class MenuUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new MenuUI();
+		new _02MenuUI();
 	}
 }

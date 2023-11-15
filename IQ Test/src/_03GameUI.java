@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
-public class GameUI extends JFrame {
+public class _03GameUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_input;
@@ -32,7 +32,7 @@ public class GameUI extends JFrame {
 	private int count = 5; // 초기 카운트 값
 
 
-	public GameUI() {
+	public _03GameUI() {
 		super("게임 메인 화면 구성");
 
 		buildGUI();
@@ -231,7 +231,7 @@ public class GameUI extends JFrame {
 		if (operator.equals("/")) {
 			while (num1 <= num2) {
 				num1 = rand.nextInt(150) + 1;
-				num2 = rand.nextInt(15) + 1;
+				num2 = rand.nextInt(15) + 2;
 			}
 
 			if (num1 % num2 != 0) {
@@ -257,6 +257,6 @@ public class GameUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new GameUI();
+		new _03GameUI();
 	}
 }

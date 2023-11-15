@@ -14,14 +14,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
-public class GameOverUI extends JFrame {
+public class _04GameOverUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_input;
 	private JLabel resultNum, resultStr;
 
 
-	public GameOverUI() {
+	public _04GameOverUI() {
 		super("게임 종료 화면 구성");
 
 		buildGUI();
@@ -95,6 +95,6 @@ public class GameOverUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new GameOverUI();
+		new _04GameOverUI();
 	}
 }

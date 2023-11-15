@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 
 
 // 시작화면
-public class StartUI extends JFrame {
+public class _01StartUI extends JFrame {
 
-	public StartUI() {
+	public _01StartUI() {
 		setLayout(null);
 
 		JLabel title = new JLabel("당신의 지능은 몇살인가요?");
@@ -69,7 +69,7 @@ public class StartUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new StartUI();
+		new _01StartUI();
 	}
 
 }
