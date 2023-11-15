@@ -48,6 +48,14 @@ public class _03GameUI extends JFrame {
 
 
 	private void buildGUI() {
+		JButton levelCompleteButton = new JButton("다음->");
+		levelCompleteButton.setBounds(530, 380, 150, 60);
+		add(levelCompleteButton);
+		levelCompleteButton.setEnabled(false);
+
+		Font buttonFont = levelCompleteButton.getFont();
+		levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+
 		add(createDisplayPanel());
 		add(createInputPanel(), BorderLayout.SOUTH);
 		add(createQuestionPanel(), BorderLayout.CENTER);
