@@ -41,7 +41,7 @@ public class StartUI extends JFrame {
 		s_Button.setBounds(650, 370, 150, 50);
 		add(s_Button);
 		
-		Font buttonFont = title.getFont();
+		Font buttonFont = s_Button.getFont();
 		s_Button.setFont(new Font(buttonFont.getName(), Font.BOLD, 20));
 
 		

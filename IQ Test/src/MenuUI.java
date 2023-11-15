@@ -43,13 +43,15 @@ public class MenuUI extends JFrame {
     	JButton btn2 = new JButton("속담 맞추기");
     	JButton btn3 = new JButton("상식 테스트");
     	
-    	btn1.setBounds(150, 150, 500, 60);
-    	btn2.setBounds(150, 220,500, 60);
-    	btn3.setBounds(150, 290, 500, 60);
+    	btn1.setBounds(150, 150, 500, 60);     	add(btn1);
+    	btn2.setBounds(150, 220,500, 60);    	add(btn2);
+    	btn3.setBounds(150, 290, 500, 60);    	add(btn3);
     	
-    	add(btn1);
-    	add(btn2);
-    	add(btn3);
+		Font buttonFont = btn1.getFont();
+		btn1.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+		btn2.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+		btn3.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+ 
     }
 
 	class ImagePanel extends JPanel {
