@@ -80,13 +80,13 @@ public class GameUI extends JFrame {
 		JLabel levelLabel = new JLabel("Level 1");
 		levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
 
-		progressBar = new JProgressBar(0, totalLevels);
-		progressBar.setStringPainted(true);
-		progressBar.setValue(currentLevel);
-
-		topPanel.add(levelLabel, BorderLayout.WEST);
-		topPanel.add(progressBar, BorderLayout.CENTER);
-		add(topPanel, BorderLayout.NORTH);
+//		progressBar = new JProgressBar(0, totalLevels);
+//		progressBar.setStringPainted(true);
+//		progressBar.setValue(currentLevel);
+//
+//		topPanel.add(levelLabel, BorderLayout.WEST);
+//		topPanel.add(progressBar, BorderLayout.CENTER);
+//		add(topPanel, BorderLayout.NORTH);
 
 		return topPanel;
 	}
