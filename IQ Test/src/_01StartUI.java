@@ -43,6 +43,7 @@ public class _01StartUI extends JFrame {
 		});
 		pack();
 		s_button.setBounds(585, 370, 150, 50);
+
 		add(s_button);
 
 		Font buttonFont = s_button.getFont();
