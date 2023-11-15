@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Random;
+import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +28,10 @@ public class GameUI extends JFrame {
 	private int currentLevel = 0;
 	private final int totalLevels = 10;
 
+	private JLabel timerLabel;
+	private Timer timer;
+	private int count = 5; // 초기 카운트 값
+
 
 	public GameUI() {
 		super("게임 메인 화면 구성");
@@ -48,7 +53,7 @@ public class GameUI extends JFrame {
 		add(createInputPanel(), BorderLayout.SOUTH);
 		add(createQuestionPanel(), BorderLayout.CENTER);
 		add(addProgressBar(), BorderLayout.NORTH);
-		game1_CalcRandom();
+		game9_10_CalcRandom();
 
 	}
 
@@ -158,20 +163,92 @@ public class GameUI extends JFrame {
 	// 한 문제 맞출때 마다 5씩 증가
 	// 난이도 별 랜덤 범위 설정
 
+	// 1~3, 4~5, 6~8, 9~10, 4구역으로 나누기
+	// 1~3은 한자리수의 + -
+	// 4~5는 한자리수의 *
+	// 6~8은 두자리수의 + -
+	// 9~10은 두자리수의 * /
 
-	// 산술 문제시 랜덤 값 설정
-	public void game1_CalcRandom() {
+
+	// 레벨 1~3
+	public void game1_3_CalcRandom() {
 		Random rand = new Random();
 
-		int num1 = rand.nextInt(20);
-		int num2 = rand.nextInt(20);
+		int num1 = rand.nextInt(9) + 1;
+		int num2 = rand.nextInt(9) + 1;
 
-		String[] operators = { "+", "-", "*", "/" };
+		String[] operators = { "+", "-" };
 		String operator1 = operators[rand.nextInt(operators.length)];
 
 		t_operand1.setText(String.valueOf(num1));
 		t_operand2.setText(String.valueOf(num2));
 		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 4~5
+	public void game4_5_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(9) + 1;
+		int num2 = rand.nextInt(9) + 1;
+
+		String operators = "*";
+		String operator1 = operators;
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 6~8
+	public void game6_8_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(20) + 1;
+		int num2 = rand.nextInt(20) + 1;
+
+		String[] operators = { "+", "-" };
+		String operator1 = operators[rand.nextInt(operators.length)];
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 9~10
+	public void game9_10_CalcRandom() {
+		Random rand = new Random();
+		int num1 = rand.nextInt(35) + 1;
+		int num2 = rand.nextInt(35) + 1;
+
+		String[] operators = { "*", "/" };
+		String operator = operators[rand.nextInt(operators.length)];
+
+		int result = 0;
+		if (operator.equals("/")) {
+			while (num1 <= num2) {
+				num1 = rand.nextInt(150) + 1;
+				num2 = rand.nextInt(15) + 1;
+			}
+
+			if (num1 % num2 != 0) {
+				num1 -= num1 % num2;
+			}
+
+			result = num1 / num2;
+		} else {
+			result = num1 * num2;
+		}
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator);
 		t_result.setText("?");
 	}
 

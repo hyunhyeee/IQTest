@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,6 +18,7 @@ public class GameOverUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_input;
+	private JLabel resultNum, resultStr;
 
 
 	public GameOverUI() {
@@ -70,6 +72,15 @@ public class GameOverUI extends JFrame {
 
 		return p;
 	}
+
+	// private JPanel createResultPanel() {
+	// JPanel p = new JPanel();
+	//
+	// resultNum = new JLabel();
+	// resultStr = new JLabel();
+	//
+	// // resultNum.setBounds()
+	// }
 
 
 	public static void main(String[] args) {
