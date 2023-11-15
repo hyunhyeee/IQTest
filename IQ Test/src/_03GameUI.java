@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Random;
-import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -21,15 +18,6 @@ public class _03GameUI extends JFrame {
 	private JTextArea t_display;
 	private JTextField t_input;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result; // 산술 문제 출제란
-	private JProgressBar progressBar;
-	private JButton levelCompleteButton;
-
-	private int currentLevel = 0;
-	private final int totalLevels = 10;
-
-	private JLabel timerLabel;
-	private Timer timer;
-	private int count = 5; // 초기 카운트 값
 
 
 	public _03GameUI() {
@@ -59,7 +47,6 @@ public class _03GameUI extends JFrame {
 		add(createDisplayPanel());
 		add(createInputPanel(), BorderLayout.SOUTH);
 		add(createQuestionPanel(), BorderLayout.CENTER);
-		add(addProgressBar(), BorderLayout.NORTH);
 		game9_10_CalcRandom();
 
 	}
@@ -71,29 +58,7 @@ public class _03GameUI extends JFrame {
 		t_display = new JTextArea();
 		t_display.setEditable(false);
 
-		// JLabel levelLabel = new JLabel("Level 1");
-		// levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
-		// levelLabel.setBounds(26, 10, 130, 84);
-		// add(levelLabel);
 		return p;
-	}
-
-
-	private JPanel addProgressBar() {
-
-		JPanel topPanel = new JPanel(new BorderLayout());
-		JLabel levelLabel = new JLabel("Level 1");
-		levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
-
-		// progressBar = new JProgressBar(0, totalLevels);
-		// progressBar.setStringPainted(true);
-		// progressBar.setValue(currentLevel);
-		//
-		// topPanel.add(levelLabel, BorderLayout.WEST);
-		// topPanel.add(progressBar, BorderLayout.CENTER);
-		// add(topPanel, BorderLayout.NORTH);
-
-		return topPanel;
 	}
 
 
@@ -255,12 +220,6 @@ public class _03GameUI extends JFrame {
 		t_operand2.setText(String.valueOf(num2));
 		t_operator1.setText(operator);
 		t_result.setText("?");
-	}
-
-
-	// 산술 문제 게임 구성
-	public void game1_Calc() {
-
 	}
 
 
