@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -64,8 +63,6 @@ public class GameUI extends JFrame {
 		t_display = new JTextArea();
 		t_display.setEditable(false);
 
-		p.add(new JScrollPane(t_display), BorderLayout.CENTER);
-
 		// JLabel levelLabel = new JLabel("Level 1");
 		// levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
 		// levelLabel.setBounds(26, 10, 130, 84);
@@ -80,13 +77,13 @@ public class GameUI extends JFrame {
 		JLabel levelLabel = new JLabel("Level 1");
 		levelLabel.setFont(new Font("굴림", Font.PLAIN, 25));
 
-//		progressBar = new JProgressBar(0, totalLevels);
-//		progressBar.setStringPainted(true);
-//		progressBar.setValue(currentLevel);
-//
-//		topPanel.add(levelLabel, BorderLayout.WEST);
-//		topPanel.add(progressBar, BorderLayout.CENTER);
-//		add(topPanel, BorderLayout.NORTH);
+		// progressBar = new JProgressBar(0, totalLevels);
+		// progressBar.setStringPainted(true);
+		// progressBar.setValue(currentLevel);
+		//
+		// topPanel.add(levelLabel, BorderLayout.WEST);
+		// topPanel.add(progressBar, BorderLayout.CENTER);
+		// add(topPanel, BorderLayout.NORTH);
 
 		return topPanel;
 	}
