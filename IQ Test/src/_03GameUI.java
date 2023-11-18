@@ -76,20 +76,6 @@ public class _03GameUI extends JFrame {
 		JTextField t_input = new JTextField(30);
 		JButton b_send = new JButton("보내기");
 
-		getContentPane().add(createDisplayPanel());
-		getContentPane().add(createInputPanel());
-		getContentPane().add(createQuestionPanel());
-		generateRandomProblem(1);
-		generateRandomProblem(2);
-		generateRandomProblem(3);
-		generateRandomProblem(4);
-		generateRandomProblem(5);
-		generateRandomProblem(6);
-		generateRandomProblem(7);
-		generateRandomProblem(8);
-		generateRandomProblem(9);
-		generateRandomProblem(10);
-
 		t_input.setBounds(0, 522, 692, 45);
 		b_send.setBounds(690, 522, 100, 45);
 
@@ -101,6 +87,7 @@ public class _03GameUI extends JFrame {
 
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
+		game6_8_CalcRandom();
 	}
 
 
@@ -153,23 +140,6 @@ public class _03GameUI extends JFrame {
 	}
 
 
-	private JPanel createInputPanel() {
-		JPanel p = new JPanel();
-		JTextField t_input = new JTextField(30);
-		JButton b_send = new JButton("보내기");
-
-		t_input.setBounds(0, 522, 692, 45);
-		b_send.setBounds(690, 522, 100, 45);
-
-		add(t_input);
-		add(b_send);
-
-		t_input.setEnabled(true);
-		b_send.setEnabled(true);
-		return p;
-	}
-
-
 	private JPanel createQuestionPanel() {
 		JPanel p = new JPanel(null);
 		p.setBounds(0, 0, 786, 562);
@@ -215,83 +185,6 @@ public class _03GameUI extends JFrame {
 		return p;
 	}
 
-
-	// 4개의 단계 하나의 메소드로 수정
-	private void generateRandomProblem(int level) {
-		Random rand = new Random();
-		int num1 = 0;
-		int num2 = 0;
-
-		String operator = " ";
-
-		switch (level) {
-		case 1 , 2 , 3: // 레벨 1~3
-			num1 = rand.nextInt(9) + 1;
-			num2 = rand.nextInt(9) + 1;
-			String[] operators1 = { "+", "-" };
-			operator = operators1[rand.nextInt(operators1.length)];
-			break;
-		case 4 , 5: // 레벨 4~5
-			num1 = rand.nextInt(9) + 2;
-			num2 = rand.nextInt(9) + 2;
-			operator = "*";
-			break;
-		case 6 , 7 , 8: // 레벨 6~8
-			num1 = rand.nextInt(20) + 10;
-			num2 = rand.nextInt(20) + 10;
-			String[] operators2 = { "+", "-" };
-			operator = operators2[rand.nextInt(operators2.length)];
-			break;
-		case 9 , 10: // 레벨 9~10
-			num1 = rand.nextInt(35) + 4;
-			num2 = rand.nextInt(35) + 4;
-			String[] operators3 = { "*", "/" };
-			operator = operators3[rand.nextInt(operators3.length)];
-			List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
-			while (operator.equals("/") && (num1 <= num2 || excludedNumbers.contains(num2)
-			    || num1 == num2 || num1 % num2 != 0)) {
-				num1 = rand.nextInt(150) + 10;
-				num2 = rand.nextInt(15) + 2;
-			}
-			if (operator.equals("/")) {
-				num1 -= num1 % num2;
-			}
-			break;
-		default:
-			break;
-		}
-
-		t_operand1.setText(String.valueOf(num1));
-		t_operand2.setText(String.valueOf(num2));
-		t_operator1.setText(operator);
-		t_result.setText("?");
-
-		int result = 0;
-
-		switch (operator) {
-		case "+":
-			result = num1 + num2;
-			break;
-		case "-":
-			result = num1 - num2;
-			break;
-		case "*":
-			result = num1 * num2;
-			break;
-		case "/":
-			if (num2 != 0) {
-				result = num1 / num2;
-			} else {
-
-			}
-			break;
-		default:
-			break;
-		}
-
-		return;
-	}
-
 	// 난이도 기준 설정
 	// 대한민국 평균 아이큐 106
 	// 일반인 아이큐 : 80 ~ 89
@@ -304,6 +197,92 @@ public class _03GameUI extends JFrame {
 	// 4~5는 한자리수의 *
 	// 6~8은 두자리수의 + -
 	// 9~10은 두자리수의 * /
+
+
+	// 레벨 1~3
+	public void game1_3_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(9) + 1;
+		int num2 = rand.nextInt(9) + 1;
+
+		String[] operators = { "+", "-" };
+		String operator1 = operators[rand.nextInt(operators.length)];
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 4~5
+	// 1 곱하기 제외 O
+	public void game4_5_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(9) + 2;
+		int num2 = rand.nextInt(9) + 2;
+
+		String operators = "*";
+		String operator1 = operators;
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 6~8
+	// 1의 자리수 제외, 두자리 수로 설정 O
+	public void game6_8_CalcRandom() {
+		Random rand = new Random();
+
+		int num1 = rand.nextInt(20) + 10;
+		int num2 = rand.nextInt(20) + 10;
+
+		String[] operators = { "+", "-" };
+		String operator1 = operators[rand.nextInt(operators.length)];
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator1);
+		t_result.setText("?");
+	}
+
+
+	// 레벨 9~10
+	// 0, 1, 2, 3, 5, 7, 10 나누기에서 제외 O
+	// 0 ~ 3 곱하기에서 제외 O
+	public void game9_10_CalcRandom() {
+		Random rand = new Random();
+		int num1 = rand.nextInt(35) + 4;
+		int num2 = rand.nextInt(35) + 4;
+
+		String[] operators = { "*", "/" };
+		String operator = operators[rand.nextInt(operators.length)];
+
+		int result = 0;
+		if (operator.equals("/")) {
+			List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
+			while (num1 <= num2 || excludedNumbers.contains(num2) || num1 == num2
+			    || num1 % num2 != 0) {
+				num1 = rand.nextInt(150) + 10;
+				num2 = rand.nextInt(15) + 2;
+			}
+
+			num1 -= num1 % num2;
+			result = num1 / num2;
+		} else {
+			result = num1 * num2;
+		}
+
+		t_operand1.setText(String.valueOf(num1));
+		t_operand2.setText(String.valueOf(num2));
+		t_operator1.setText(operator);
+		t_result.setText("?");
+	}
 
 
 	private class LevelBar extends JPanel {
@@ -342,7 +321,6 @@ public class _03GameUI extends JFrame {
 			}
 
 		}
-
 	}
 
 
