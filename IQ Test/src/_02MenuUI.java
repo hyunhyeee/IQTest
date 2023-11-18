@@ -56,25 +56,25 @@ public class _02MenuUI extends JFrame {
 		pack();
 
 		JButton btn2 = new JButton("속담 맞추기");
-		btn2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_03GameUI T_Frame = new _03GameUI();
-				T_Frame.setVisible(true);
-				dispose();
-			}
-		});
+//		btn2.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				_03GameUI T_Frame = new _03GameUI();
+//				T_Frame.setVisible(true);
+//				dispose();
+//			}
+//		});
 		pack();
 
 		JButton btn3 = new JButton("상식 테스트");
-		btn3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_03GameUI T_Frame = new _03GameUI();
-				T_Frame.setVisible(true);
-				dispose();
-			}
-		});
+//		btn3.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				_03GameUI T_Frame = new _03GameUI();
+//				T_Frame.setVisible(true);
+//				dispose();
+//			}
+//		});
 		pack();
 
 		btn1.setBounds(150, 150, 500, 60);
