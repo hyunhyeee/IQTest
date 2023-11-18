@@ -259,13 +259,13 @@ public class _03GameUI extends JFrame {
 		int num1 = rand.nextInt(35) + 4;
 		int num2 = rand.nextInt(35) + 4;
 
-		String[] operators = { "*", "/" };
+		String[] operators = { "/" };
 		String operator = operators[rand.nextInt(operators.length)];
 
 		int result = 0;
 		if (operator.equals("/")) {
 			List<Integer> excludedNumbers = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 5, 7, 10));
-			while (num1 <= num2 || excludedNumbers.contains(num1) || num1 == num2) {
+			while (num1 <= num2 || excludedNumbers.contains(num1) || num1 != num2) {
 				num1 = rand.nextInt(150) + 1;
 				num2 = rand.nextInt(15) + 2;
 			}
