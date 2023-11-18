@@ -153,11 +153,6 @@ public class _03GameUI extends JFrame {
 	}
 
 
-	updateLevel(1);
-		return p;
-	}
-
-
 	private JPanel createInputPanel() {
 		JPanel p = new JPanel();
 		JTextField t_input = new JTextField(30);
@@ -217,59 +212,7 @@ public class _03GameUI extends JFrame {
 		t_operator2.setEditable(false);
 		t_result.setEditable(false);
 
-	}
-
-
-	private JPanel createQuestionPanel() {
-		// 네프 계산 프로그램 참고
-		JPanel p = new JPanel(null);
-		p.setBounds(0, 0, 786, 562);
-
-		t_operand1 = new JTextField(30);
-		t_operator = new JTextField(30);
-		t_operand2 = new JTextField(30);
-		t_operator2 = new JTextField(30);
-		t_result = new JTextField(30);
-
-		t_operand1.setHorizontalAlignment(SwingConstants.CENTER);
-		t_operator.setHorizontalAlignment(SwingConstants.CENTER);
-		t_operand2.setHorizontalAlignment(SwingConstants.CENTER);
-		t_operator2.setHorizontalAlignment(SwingConstants.CENTER);
-		t_result.setHorizontalAlignment(SwingConstants.CENTER);
-
-		t_operand1.setBounds(85, 230, 90, 50);
-		t_operator.setBounds(225, 230, 60, 50);
-		t_operand2.setBounds(340, 230, 90, 50);
-		t_operator2.setBounds(485, 230, 60, 50);
-		t_result.setBounds(600, 230, 90, 50);
-
-		p.add(t_operand1);
-		p.add(t_operator);
-		p.add(t_operand2);
-		p.add(t_operator2);
-		p.add(t_result);
-
-		t_operator2.setText("=");
-
-		t_operand1.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_operator.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_operand2.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_operator2.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_result.setFont(new Font("굴림", Font.PLAIN, 30));
-
-		t_operand1.setEditable(false);
-		t_operator.setEditable(false);
-		t_operand2.setEditable(false);
-		t_operator2.setEditable(false);
-		t_result.setEditable(false);
-
 		return p;
-
-	}
-
-	return p;
-
-
 	}
 
 
@@ -320,7 +263,7 @@ public class _03GameUI extends JFrame {
 
 		t_operand1.setText(String.valueOf(num1));
 		t_operand2.setText(String.valueOf(num2));
-		t_operator.setText(operator);
+		t_operator1.setText(operator);
 		t_result.setText("?");
 
 		int result = 0;
