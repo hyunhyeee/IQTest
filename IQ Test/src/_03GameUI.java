@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -72,7 +69,7 @@ public class _03GameUI extends JFrame {
 
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
-		game6_8_CalcRandom();
+		game9_10_CalcRandom();
 
 	}
 
@@ -241,28 +238,26 @@ public class _03GameUI extends JFrame {
 
 
 	// 레벨 9~10
-	// 0, 1, 2, 3, 5, 7, 10 나누기에서 제외
-	// 0 ~ 3 곱하기에서 제외
+	// 0, 1, 2, 3, 5, 7, 10 나누기에서 제외 O
+	// 0 ~ 3 곱하기에서 제외 O
 	public void game9_10_CalcRandom() {
 		Random rand = new Random();
 		int num1 = rand.nextInt(35) + 4;
 		int num2 = rand.nextInt(35) + 4;
 
-		String[] operators = { "/" };
+		String[] operators = { "*", "/" };
 		String operator = operators[rand.nextInt(operators.length)];
 
 		int result = 0;
 		if (operator.equals("/")) {
-			List<Integer> excludedNumbers = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 5, 7, 10));
-			while (num1 <= num2 || excludedNumbers.contains(num1) || num1 != num2) {
-				num1 = rand.nextInt(150) + 1;
+			List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
+			while (num1 <= num2 || excludedNumbers.contains(num2) || num1 == num2
+			    || num1 % num2 != 0) {
+				num1 = rand.nextInt(150) + 10;
 				num2 = rand.nextInt(15) + 2;
 			}
 
-			if (num1 % num2 != 0) {
-				num1 -= num1 % num2;
-			}
-
+			num1 -= num1 % num2;
 			result = num1 / num2;
 		} else {
 			result = num1 * num2;
