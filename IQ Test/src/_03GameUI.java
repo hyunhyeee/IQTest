@@ -72,7 +72,7 @@ public class _03GameUI extends JFrame {
 
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
-		game9_10_CalcRandom();
+		game6_8_CalcRandom();
 
 	}
 
@@ -86,15 +86,9 @@ public class _03GameUI extends JFrame {
 		t_display.setEditable(false);
 
 		timerLabel = new JLabel(Integer.toString(count));
+		timerLabel.setBounds(665, 38, 450, 60);
 		timerLabel.setFont(new Font("Arial", Font.BOLD, 45));
 		getContentPane().add(timerLabel);
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				updateLabelPosition();
-			}
-		});
 
 		timer = new Timer(1000, e -> updateTimer());
 		timer.start();
@@ -129,11 +123,6 @@ public class _03GameUI extends JFrame {
 		Font labelFont = levelLabel.getFont();
 		levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
 		getContentPane().add(levelLabel);
-	}
-
-
-	private void updateLabelPosition() {
-		timerLabel.setBounds(665, 38, 450, 60);
 	}
 
 
