@@ -15,76 +15,67 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+
 public class _03GameUI extends JFrame {
 
-<<<<<<< HEAD
 	private JTextArea t_display;
-	private JTextField t_operand1, t_operator, t_operand2, t_operator2, t_result; // 산술 문제 출제란
-	private JTextField t_input;
-	private JButton b_send;
+	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result, t_input;
 	private JLabel timerLabel;
 	private Timer timer;
-	private int count = 7; // 초기 카운트 값
+	private int count = 7;
 	private LevelBar levelBar;
 	private JLabel levelLabel;
-=======
-    private JTextArea t_display;
-    private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result, t_input;
-    private JLabel timerLabel;
-    private Timer timer;
-    private int count = 7;
-    private LevelBar levelBar;
-    private JLabel levelLabel;
-    private JLabel startLabel;
-    private Timer startTimer;
+	private JLabel startLabel;
+	private Timer startTimer;
 
-    public _03GameUI() {
-        super("게임 메인 화면 구성");
->>>>>>> branch 'main' of https://github.com/hyunhyeee/IQTest.git
 
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
+	public _03GameUI() {
+		super("게임 메인 화면 구성");
 
-        // "게임이 시작됩니다" 라벨을 표시하기 위한 설정
-        startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
-        startLabel.setBounds(170, 230, 500, 50);
-        startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
-        getContentPane().setLayout(null);
-        getContentPane().add(startLabel);
+		setSize(800, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setResizable(false);
 
-        // 타이머를 이용하여 일정 시간 후에 시작 라벨을 숨기고 게임 화면을 보이게 함
-        startTimer = new Timer(3000, e -> {
-            startLabel.setVisible(false);
-            startGame();
-        });
-        startTimer.setRepeats(false); // 타이머를 한 번만 실행하도록 설정
-        startTimer.start();
+		// "게임이 시작됩니다" 라벨을 표시하기 위한 설정
+		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
+		startLabel.setBounds(170, 230, 500, 50);
+		startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
+		getContentPane().setLayout(null);
+		getContentPane().add(startLabel);
 
-        setVisible(true);
-    }
+		// 타이머를 이용하여 일정 시간 후에 시작 라벨을 숨기고 게임 화면을 보이게 함
+		startTimer = new Timer(3000, e -> {
+			startLabel.setVisible(false);
+			startGame();
+		});
+		startTimer.setRepeats(false); // 타이머를 한 번만 실행하도록 설정
+		startTimer.start();
 
-    private void startGame() {
-        buildGUI(); // 화면 구성 요소 생성 및 보이기
-        timer.start(); // 타이머 시작
+		setVisible(true);
+	}
 
-    }
 
-    private void buildGUI() {
-        getContentPane().setLayout(null);
-        JButton levelCompleteButton = new JButton("다음->");
-        levelCompleteButton.setBounds(560, 370, 150, 60);
-        getContentPane().add(levelCompleteButton);
-        levelCompleteButton.setEnabled(false);
+	private void startGame() {
+		buildGUI(); // 화면 구성 요소 생성 및 보이기
+		timer.start(); // 타이머 시작
 
-        Font buttonFont = levelCompleteButton.getFont();
-        levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+	}
 
-        JTextField t_input = new JTextField(30);
-        JButton b_send = new JButton("보내기");
 
-<<<<<<< HEAD
+	private void buildGUI() {
+		getContentPane().setLayout(null);
+		JButton levelCompleteButton = new JButton("다음->");
+		levelCompleteButton.setBounds(560, 370, 150, 60);
+		getContentPane().add(levelCompleteButton);
+		levelCompleteButton.setEnabled(false);
+
+		Font buttonFont = levelCompleteButton.getFont();
+		levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+
+		JTextField t_input = new JTextField(30);
+		JButton b_send = new JButton("보내기");
+
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createInputPanel());
 		getContentPane().add(createQuestionPanel());
@@ -98,69 +89,71 @@ public class _03GameUI extends JFrame {
 		generateRandomProblem(8);
 		generateRandomProblem(9);
 		generateRandomProblem(10);
-=======
-        t_input.setBounds(0, 522, 692, 45);
-        b_send.setBounds(690, 522, 100, 45);
 
-        add(t_input);
-        add(b_send);
+		t_input.setBounds(0, 522, 692, 45);
+		b_send.setBounds(690, 522, 100, 45);
 
-        t_input.setEnabled(true);
-        b_send.setEnabled(true);
+		add(t_input);
+		add(b_send);
 
-        getContentPane().add(createDisplayPanel());
-        getContentPane().add(createQuestionPanel());
-        game6_8_CalcRandom();
-    }
+		t_input.setEnabled(true);
+		b_send.setEnabled(true);
 
-    private JPanel createDisplayPanel() {
-        JPanel p = new JPanel();
-        p.setBounds(0, 0, 0, 0);
-        p.setLayout(null);
->>>>>>> branch 'main' of https://github.com/hyunhyeee/IQTest.git
+		getContentPane().add(createDisplayPanel());
+		getContentPane().add(createQuestionPanel());
+	}
 
-        t_display = new JTextArea();
-        t_display.setEditable(false);
 
-        timerLabel = new JLabel(Integer.toString(count));
-        timerLabel.setBounds(665, 38, 450, 60);
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 45));
-        getContentPane().add(timerLabel);
+	private JPanel createDisplayPanel() {
+		JPanel p = new JPanel();
+		p.setBounds(0, 0, 0, 0);
+		p.setLayout(null);
 
-        timer = new Timer(1000, e -> updateTimer());
-        levelBar = new LevelBar();
-        levelBar.setBounds(210, 50, 370, 35);
-        getContentPane().add(levelBar);
+		t_display = new JTextArea();
+		t_display.setEditable(false);
 
-        updateLevel(8);
-        return p;
-    }
+		timerLabel = new JLabel(Integer.toString(count));
+		timerLabel.setBounds(665, 38, 450, 60);
+		timerLabel.setFont(new Font("Arial", Font.BOLD, 45));
+		getContentPane().add(timerLabel);
 
-    private void updateTimer() {
-        if (--count > 0) {
-            timerLabel.setText(Integer.toString(count));
-        } else {
-            timer.stop();
-            timerLabel.setText("X");
-        }
-    }
+		timer = new Timer(1000, e -> updateTimer());
+		levelBar = new LevelBar();
+		levelBar.setBounds(210, 50, 370, 35);
+		getContentPane().add(levelBar);
 
-    private void updateLevel(int level) {
-        levelBar.setLevel(level);
-        levelBar.repaint();
+		updateLevel(8);
+		return p;
+	}
 
-        levelLabel = new JLabel("Level " + level);
-        levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        levelLabel.setBounds(5, 52, 150, 30);
-        Font labelFont = levelLabel.getFont();
-        levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
-        getContentPane().add(levelLabel);
-        
-        repaint(); // 변경사항 적용을 위해 repaint 호출
-    }
 
-<<<<<<< HEAD
-		updateLevel(1);
+	private void updateTimer() {
+		if (--count > 0) {
+			timerLabel.setText(Integer.toString(count));
+		} else {
+			timer.stop();
+			timerLabel.setText("X");
+		}
+
+	}
+
+
+	private void updateLevel(int level) {
+		levelBar.setLevel(level);
+		levelBar.repaint();
+
+		levelLabel = new JLabel("Level " + level);
+		levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		levelLabel.setBounds(5, 52, 150, 30);
+		Font labelFont = levelLabel.getFont();
+		levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
+		getContentPane().add(levelLabel);
+
+		repaint(); // 변경사항 적용을 위해 repaint 호출
+	}
+
+
+	updateLevel(1);
 		return p;
 	}
 
@@ -180,51 +173,53 @@ public class _03GameUI extends JFrame {
 		b_send.setEnabled(true);
 		return p;
 	}
-=======
-    private JPanel createQuestionPanel() {
-        JPanel p = new JPanel(null);
-        p.setBounds(0, 0, 786, 562);
->>>>>>> branch 'main' of https://github.com/hyunhyeee/IQTest.git
 
-        t_operand1 = new JTextField(30);
-        t_operator1 = new JTextField(30);
-        t_operand2 = new JTextField(30);
-        t_operator2 = new JTextField(30);
-        t_result = new JTextField(30);
 
-        t_operand1.setHorizontalAlignment(SwingConstants.CENTER);
-        t_operator1.setHorizontalAlignment(SwingConstants.CENTER);
-        t_operand2.setHorizontalAlignment(SwingConstants.CENTER);
-        t_operator2.setHorizontalAlignment(SwingConstants.CENTER);
-        t_result.setHorizontalAlignment(SwingConstants.CENTER);
+	private JPanel createQuestionPanel() {
+		JPanel p = new JPanel(null);
+		p.setBounds(0, 0, 786, 562);
 
-        t_operand1.setBounds(85, 230, 90, 50);
-        t_operator1.setBounds(225, 230, 60, 50);
-        t_operand2.setBounds(340, 230, 90, 50);
-        t_operator2.setBounds(485, 230, 60, 50);
-        t_result.setBounds(600, 230, 90, 50);
+		t_operand1 = new JTextField(30);
+		t_operator1 = new JTextField(30);
+		t_operand2 = new JTextField(30);
+		t_operator2 = new JTextField(30);
+		t_result = new JTextField(30);
 
-        p.add(t_operand1);
-        p.add(t_operator1);
-        p.add(t_operand2);
-        p.add(t_operator2);
-        p.add(t_result);
+		t_operand1.setHorizontalAlignment(SwingConstants.CENTER);
+		t_operator1.setHorizontalAlignment(SwingConstants.CENTER);
+		t_operand2.setHorizontalAlignment(SwingConstants.CENTER);
+		t_operator2.setHorizontalAlignment(SwingConstants.CENTER);
+		t_result.setHorizontalAlignment(SwingConstants.CENTER);
 
-        t_operator2.setText("=");
+		t_operand1.setBounds(85, 230, 90, 50);
+		t_operator1.setBounds(225, 230, 60, 50);
+		t_operand2.setBounds(340, 230, 90, 50);
+		t_operator2.setBounds(485, 230, 60, 50);
+		t_result.setBounds(600, 230, 90, 50);
 
-        t_operand1.setFont(new Font("굴림", Font.PLAIN, 30));
-        t_operator1.setFont(new Font("굴림", Font.PLAIN, 30));
-        t_operand2.setFont(new Font("굴림", Font.PLAIN, 30));
-        t_operator2.setFont(new Font("굴림", Font.PLAIN, 30));
-        t_result.setFont(new Font("굴림", Font.PLAIN, 30));
+		p.add(t_operand1);
+		p.add(t_operator1);
+		p.add(t_operand2);
+		p.add(t_operator2);
+		p.add(t_result);
 
-        t_operand1.setEditable(false);
-        t_operator1.setEditable(false);
-        t_operand2.setEditable(false);
-        t_operator2.setEditable(false);
-        t_result.setEditable(false);
+		t_operator2.setText("=");
 
-<<<<<<< HEAD
+		t_operand1.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_operator1.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_operand2.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_operator2.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_result.setFont(new Font("굴림", Font.PLAIN, 30));
+
+		t_operand1.setEditable(false);
+		t_operator1.setEditable(false);
+		t_operand2.setEditable(false);
+		t_operator2.setEditable(false);
+		t_result.setEditable(false);
+
+	}
+
+
 	private JPanel createQuestionPanel() {
 		// 네프 계산 프로그램 참고
 		JPanel p = new JPanel(null);
@@ -271,10 +266,11 @@ public class _03GameUI extends JFrame {
 		return p;
 
 	}
-=======
-        return p;
-    }
->>>>>>> branch 'main' of https://github.com/hyunhyeee/IQTest.git
+
+	return p;
+
+
+	}
 
 
 	// 4개의 단계 하나의 메소드로 수정
@@ -406,7 +402,8 @@ public class _03GameUI extends JFrame {
 
 	}
 
-    public static void main(String[] args) {
-        new _03GameUI();
-    }
+
+	public static void main(String[] args) {
+		new _03GameUI();
+	}
 }
