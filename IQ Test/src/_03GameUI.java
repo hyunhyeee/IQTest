@@ -11,7 +11,6 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -29,6 +28,7 @@ public class _03GameUI extends JFrame {
     private JLabel levelLabel;
     private JLabel startLabel;
     private Timer startTimer;
+    private JButton finalResultButton;
 
     private JButton levelCompleteButton;
     private int currentLevel = 1;
@@ -53,6 +53,17 @@ public class _03GameUI extends JFrame {
         });
         startTimer.setRepeats(false);
         startTimer.start();
+        
+        finalResultButton = new JButton("최종 결과 보기");
+        finalResultButton.setBounds(560, 370, 150, 60);
+        getContentPane().add(finalResultButton);
+        finalResultButton.setVisible(false);  // 처음에는 보이지 않도록 설정
+
+        finalResultButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	gameOver();
+            }
+        });
 
         setVisible(true);
     }
@@ -375,9 +386,18 @@ public class _03GameUI extends JFrame {
 
     private void gameOver() {
         timer.stop();
-        JOptionPane.showMessageDialog(this, "게임 종료! 잘못된 답을 제출했습니다.");
         startLabel.setVisible(false);
         t_input.setEnabled(false);
+        
+        finalResultButton.setVisible(true);
+        finalResultButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	_04GameOverUI nextClassFrame = new _04GameOverUI();
+                nextClassFrame.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {
