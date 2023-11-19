@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,7 +59,24 @@ public class _04GameOverUI extends JFrame {
 		JPanel p = new JPanel(new GridLayout());
 
 		JButton b_restart = new JButton("재시작하기");
+		b_restart.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_03GameUI thirdFrame = new _03GameUI();
+				thirdFrame.setVisible(true);
+				dispose();
+			}
+		});
 		JButton b_exit = new JButton("나가기");
+		b_exit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_01StartUI firstFrame = new _01StartUI();
+				firstFrame.setVisible(true);
+				dispose();
+			}
+		});
+		pack();
 
 		b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
 		b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));

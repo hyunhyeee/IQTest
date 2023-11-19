@@ -41,7 +41,6 @@ public class _01StartUI extends JFrame {
 				dispose();
 			}
 		});
-		pack();
 		s_button.setBounds(585, 370, 150, 50);
 
 		add(s_button);
