@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +11,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -28,6 +31,9 @@ public class _03GameUI extends JFrame {
 	private JLabel startLabel;
 	private Timer startTimer;
 
+	private JButton levelCompleteButton;
+	private int currentLevel = 1;
+
 
 	public _03GameUI() {
 		super("게임 메인 화면 구성");
@@ -37,19 +43,17 @@ public class _03GameUI extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-		// "게임이 시작됩니다" 라벨을 표시하기 위한 설정
 		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
 		startLabel.setBounds(170, 230, 500, 50);
 		startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
 		getContentPane().setLayout(null);
 		getContentPane().add(startLabel);
 
-		// 타이머를 이용하여 일정 시간 후에 시작 라벨을 숨기고 게임 화면을 보이게 함
 		startTimer = new Timer(3000, e -> {
 			startLabel.setVisible(false);
 			startGame();
 		});
-		startTimer.setRepeats(false); // 타이머를 한 번만 실행하도록 설정
+		startTimer.setRepeats(false);
 		startTimer.start();
 
 		setVisible(true);
@@ -57,38 +61,53 @@ public class _03GameUI extends JFrame {
 
 
 	private void startGame() {
-		buildGUI(); // 화면 구성 요소 생성 및 보이기
-		timer.start(); // 타이머 시작
-
+		buildGUI();
+		updateLevel(currentLevel);
+		generateRandomProblem(currentLevel);
+		timer.start();
 	}
 
 
 	private void buildGUI() {
 		getContentPane().setLayout(null);
-		JButton levelCompleteButton = new JButton("다음->");
+
+		levelCompleteButton = new JButton("다음->");
 		levelCompleteButton.setBounds(560, 370, 150, 60);
 		getContentPane().add(levelCompleteButton);
 		levelCompleteButton.setEnabled(false);
 
+		levelCompleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentLevel++;
+				updateLevel(currentLevel);
+				generateRandomProblem(currentLevel);
+				levelCompleteButton.setEnabled(false);
+				timer.restart();
+				resetTimerLabel();
+				t_input.setEnabled(true);
+				t_input.setText("");
+			}
+		});
+
 		Font buttonFont = levelCompleteButton.getFont();
 		levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
 
-		JTextField t_input = new JTextField(30);
+		t_input = new JTextField(30);
 		JButton b_send = new JButton("보내기");
+
+		ActionListener sendActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkAnswer();
+			}
+		};
+
+		b_send.addActionListener(sendActionListener);
+		t_input.addActionListener(sendActionListener); // 엔터 키 입력 처리
 
 		t_input.setBounds(0, 522, 692, 45);
 		b_send.setBounds(690, 522, 100, 45);
-		b_send.addActionListener(e -> {
-			String userAnswer = t_input.getText();
-			int correctAnswer = calculateCorrectAnswer();
-
-			if (userAnswer.equals(String.valueOf(correctAnswer))) {
-				// 정답 일 시 다음 단계 구현 필수
-			} else {
-				// 오답 일 시 다음 단계 구현 필수
-			}
-
-		});
 
 		add(t_input);
 		add(b_send);
@@ -99,7 +118,7 @@ public class _03GameUI extends JFrame {
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
 
-		generateRandomProblem(1);
+		generateRandomProblem(4);
 	}
 
 
@@ -132,23 +151,35 @@ public class _03GameUI extends JFrame {
 		} else {
 			timer.stop();
 			timerLabel.setText("X");
+			gameOver();
 		}
 
 	}
 
 
+	private void resetTimerLabel() {
+		count = 7;
+		timerLabel.setText(Integer.toString(count));
+	}
+
+
 	private void updateLevel(int level) {
+		if (levelLabel == null) {
+			levelLabel = new JLabel("Level " + level);
+			levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			levelLabel.setBounds(5, 52, 150, 30);
+			Font labelFont = levelLabel.getFont();
+			levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
+			getContentPane().add(levelLabel);
+		} else {
+			// 이미 추가된 레벨 라벨이 있다면 내용만 업데이트
+			levelLabel.setText("Level " + level);
+		}
+
 		levelBar.setLevel(level);
 		levelBar.repaint();
 
-		levelLabel = new JLabel("Level " + level);
-		levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		levelLabel.setBounds(5, 52, 150, 30);
-		Font labelFont = levelLabel.getFont();
-		levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
-		getContentPane().add(levelLabel);
-
-		repaint(); // 변경사항 적용을 위해 repaint 호출
+		repaint();
 	}
 
 
@@ -159,12 +190,6 @@ public class _03GameUI extends JFrame {
 		public LevelBar() {
 			setPreferredSize(new Dimension(300, 20));
 			level = 0;
-		}
-
-
-		public int getLevel() {
-			// TODO Auto-generated method stub
-			return 0;
 		}
 
 
@@ -242,19 +267,6 @@ public class _03GameUI extends JFrame {
 		return p;
 	}
 
-	// 난이도 기준 설정
-	// 대한민국 평균 아이큐 106
-	// 일반인 아이큐 : 80 ~ 89
-	// 테스트 시작시 기본 아이큐를 80으로 설정
-	// 한 문제 맞출때 마다 5씩 증가
-	// 난이도 별 랜덤 범위 설정
-
-	// 1~3, 4~5, 6~8, 9~10, 4구역으로 나누기
-	// 1~3은 한자리수의 + -
-	// 4~5는 한자리수의 *
-	// 6~8은 두자리수의 + -
-	// 9~10은 두자리수의 * /
-
 
 	private void generateRandomProblem(int level) {
 		Random rand = new Random();
@@ -293,8 +305,9 @@ public class _03GameUI extends JFrame {
 			String[] operators3 = { "*", "/" };
 			operator = operators3[rand.nextInt(operators3.length)];
 			List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
-			while (operator.equals("/") && (num1 <= num2 || excludedNumbers.contains(num2)
-			    || num1 == num2 || num1 % num2 != 0)) {
+			while (operator.equals("/")
+			    && (num1 <= num2 || excludedNumbers.contains(num2) || num1 == num2
+			        || num1 % num2 != 0)) {
 				num1 = rand.nextInt(150) + 10;
 				num2 = rand.nextInt(15) + 2;
 			}
@@ -310,121 +323,87 @@ public class _03GameUI extends JFrame {
 		t_operand2.setText(String.valueOf(num2));
 		t_operator1.setText(operator);
 		t_result.setText("?");
-	}
 
-
-	private int calculateCorrectAnswer() {
-		int num1 = Integer.parseInt(t_operand1.getText());
-		int num2 = Integer.parseInt(t_operand2.getText());
-		String operator = t_operator1.getText();
-		int correctAnswer = 0;
+		int result = 0;
 
 		switch (operator) {
 		case "+":
-			correctAnswer = num1 + num2;
+			result = num1 + num2;
 			break;
 		case "-":
-			correctAnswer = num1 - num2;
+			result = num1 - num2;
 			break;
 		case "*":
-			correctAnswer = num1 * num2;
+			result = num1 * num2;
 			break;
 		case "/":
 			if (num2 != 0) {
-				correctAnswer = num1 / num2;
+				result = num1 / num2;
+			} else {
+
 			}
 			break;
 		default:
 			break;
 		}
 
-		return correctAnswer;
 	}
-	// // 레벨 1~3
-	// public void game1_3_CalcRandom() {
-	// Random rand = new Random();
-	//
-	// int num1 = rand.nextInt(15) + 1;
-	// int num2 = rand.nextInt(9) + 1;
-	//
-	// String[] operators = { "+", "-" };
-	// String operator1 = operators[rand.nextInt(operators.length)];
-	//
-	// t_operand1.setText(String.valueOf(num1));
-	// t_operand2.setText(String.valueOf(num2));
-	// t_operator1.setText(operator1);
-	// t_result.setText("?");
-	// }
-	//
-	//
-	// // 레벨 4~5
-	// // 1 곱하기 제외 O
-	// public void game4_5_CalcRandom() {
-	// Random rand = new Random();
-	//
-	// int num1 = rand.nextInt(16) + 2;
-	// int num2 = rand.nextInt(9) + 2;
-	//
-	// String operators = "*";
-	// String operator1 = operators;
-	//
-	// t_operand1.setText(String.valueOf(num1));
-	// t_operand2.setText(String.valueOf(num2));
-	// t_operator1.setText(operator1);
-	// t_result.setText("?");
-	// }
-	//
-	//
-	// // 레벨 6~8
-	// // 1의 자리수 제외, 두자리 수로 설정 O
-	// public void game6_8_CalcRandom() {
-	// Random rand = new Random();
-	//
-	// int num1 = rand.nextInt(999) + 10;
-	// int num2 = rand.nextInt(999) + 10;
-	//
-	// String[] operators = { "+", "-" };
-	// String operator1 = operators[rand.nextInt(operators.length)];
-	//
-	// t_operand1.setText(String.valueOf(num1));
-	// t_operand2.setText(String.valueOf(num2));
-	// t_operator1.setText(operator1);
-	// t_result.setText("?");
-	// }
-	//
-	//
-	// // 레벨 9~10
-	// // 0, 1, 2, 3, 5, 7, 10 나누기에서 제외 O
-	// // 0 ~ 3 곱하기에서 제외 O
-	// public void game9_10_CalcRandom() {
-	// Random rand = new Random();
-	// int num1 = rand.nextInt(35) + 4;
-	// int num2 = rand.nextInt(35) + 4;
-	//
-	// String[] operators = { "*", "/" };
-	// String operator = operators[rand.nextInt(operators.length)];
-	//
-	// int result = 0;
-	// if (operator.equals("/")) {
-	// List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
-	// while (num1 <= num2 || excludedNumbers.contains(num2) || num1 == num2
-	// || num1 % num2 != 0) {
-	// num1 = rand.nextInt(150) + 10;
-	// num2 = rand.nextInt(15) + 2;
-	// }
-	//
-	// num1 -= num1 % num2;
-	// result = num1 / num2;
-	// } else {
-	// result = num1 * num2;
-	// }
-	//
-	// t_operand1.setText(String.valueOf(num1));
-	// t_operand2.setText(String.valueOf(num2));
-	// t_operator1.setText(operator);
-	// t_result.setText("?");
-	// }
-	//
+
+
+	private void checkAnswer() {
+		try {
+			int userAnswer = Integer.parseInt(t_input.getText());
+			int correctAnswer = calculateResult();
+
+			if (userAnswer == correctAnswer) {
+				levelCompleteButton.setEnabled(true);
+				t_input.setEnabled(false);
+			} else {
+				gameOver();
+			}
+
+		} catch (NumberFormatException ex) {
+			System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+		}
+
+	}
+
+
+	private int calculateResult() {
+		int num1 = Integer.parseInt(t_operand1.getText());
+		int num2 = Integer.parseInt(t_operand2.getText());
+		String operator = t_operator1.getText();
+		int result = 0;
+
+		switch (operator) {
+		case "+":
+			result = num1 + num2;
+			break;
+		case "-":
+			result = num1 - num2;
+			break;
+		case "*":
+			result = num1 * num2;
+			break;
+		case "/":
+			if (num2 != 0) {
+				result = num1 / num2;
+			} else {
+
+			}
+			break;
+		}
+
+		return result;
+	}
+
+
+	private void gameOver() {
+		timer.stop();
+		JOptionPane.showMessageDialog(this, "게임 종료! 잘못된 답을 제출했습니다.");
+		startLabel.setVisible(false);
+		t_input.setEnabled(false);
+	}
 
 
 	public static void main(String[] args) {
