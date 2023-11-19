@@ -28,6 +28,8 @@ public class _03GameUI extends JFrame {
 	private JLabel startLabel;
 	private Timer startTimer;
 
+	private JButton levelCompleteButton;
+
 
 	public _03GameUI() {
 		super("게임 메인 화면 구성");
@@ -66,6 +68,16 @@ public class _03GameUI extends JFrame {
 	private void buildGUI() {
 		getContentPane().setLayout(null);
 		JButton levelCompleteButton = new JButton("다음->");
+		levelCompleteButton.addActionListener(e -> {
+			// "다음->" 버튼 클릭 시 동작 정의
+			int currentLevel = levelBar.getLevel();
+			updateLevel(currentLevel + 1); // 레벨 업데이트
+
+			// 다음 레벨 문제 출제
+			generateRandomProblem(currentLevel + 1);
+
+			levelCompleteButton.setEnabled(true); // 버튼 비활성화
+		});
 		levelCompleteButton.setBounds(560, 370, 150, 60);
 		getContentPane().add(levelCompleteButton);
 		levelCompleteButton.setEnabled(false);
@@ -159,6 +171,12 @@ public class _03GameUI extends JFrame {
 		public LevelBar() {
 			setPreferredSize(new Dimension(300, 20));
 			level = 0;
+		}
+
+
+		public int getLevel() {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 
 
