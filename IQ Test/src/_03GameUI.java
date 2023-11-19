@@ -337,29 +337,6 @@ public class _03GameUI extends JFrame {
 		t_operator1.setText(operator);
 		t_result.setText("?");
 
-		int result = 0;
-
-		switch (operator) {
-		case "+":
-			result = num1 + num2;
-			break;
-		case "-":
-			result = num1 - num2;
-			break;
-		case "*":
-			result = num1 * num2;
-			break;
-		case "/":
-			if (num2 != 0) {
-				result = num1 / num2;
-			} else {
-
-			}
-			break;
-		default:
-			break;
-		}
-
 	}
 
 
