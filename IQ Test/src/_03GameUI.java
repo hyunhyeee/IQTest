@@ -295,7 +295,7 @@ public class _03GameUI extends JFrame {
       case 1:
       case 2:
       case 3: // 레벨 1~3
-         num1 = rand.nextInt(15) + 1;
+         num1 = rand.nextInt(20) + 1;
          num2 = rand.nextInt(15) + 1;
          String[] operators1 = { "+", "-" };
          operator = operators1[rand.nextInt(operators1.length)];
@@ -303,21 +303,21 @@ public class _03GameUI extends JFrame {
       case 4:
       case 5: // 레벨 4~5
          num1 = rand.nextInt(12) + 2;
-         num2 = rand.nextInt(12) + 2;
+         num2 = rand.nextInt(10) + 2;
          operator = "*";
          break;
       case 6:
       case 7:
       case 8: // 레벨 6~8
-         num1 = rand.nextInt(500) + 60;
-         num2 = rand.nextInt(500) + 60;
+         num1 = rand.nextInt(500) + 100;
+         num2 = rand.nextInt(500) + 100;
          String[] operators2 = { "+", "-" };
          operator = operators2[rand.nextInt(operators2.length)];
          break;
       case 9:
       case 10: // 레벨 9~10
-         num1 = rand.nextInt(45) + 4;
-         num2 = rand.nextInt(45) + 4;
+         num1 = rand.nextInt(45) + 10;
+         num2 = rand.nextInt(45) + 10;
          String[] operators3 = { "*", "/" };
          operator = operators3[rand.nextInt(operators3.length)];
          List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
@@ -345,24 +345,23 @@ public class _03GameUI extends JFrame {
 
 
    private void checkAnswer() {
-      try {
-         int userAnswer = Integer.parseInt(t_input.getText());
-         int correctAnswer = calculateResult();
+	        int userAnswer = Integer.parseInt(t_input.getText());
+	        int correctAnswer = calculateResult();
 
-         if (userAnswer == correctAnswer) {
-            levelCompleteButton.setEnabled(true);
-            t_input.setEnabled(false);
-         } else {
-            gameOver();
-         }
+	        if (userAnswer == correctAnswer) {
+	            if (getCurrentLevel() == 10) {
+	            	gameOver();
+	                t_input.setEnabled(false);
+	            } else {
+	                levelCompleteButton.setEnabled(true);
+	                t_input.setEnabled(false);
+	            }
+	        } else {
+	            gameOver();
+	        }
+	    } 
 
-      } catch (NumberFormatException ex) {
-         System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
-      }
-
-   }
-
-
+   
    private int calculateResult() {
       int num1 = Integer.parseInt(t_operand1.getText());
       int num2 = Integer.parseInt(t_operand2.getText());
@@ -401,7 +400,7 @@ public class _03GameUI extends JFrame {
       finalResultButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-        	 _04GameOverUI nextClassFrame = new _04GameOverUI();
+        	_04GameOverUI nextClassFrame = new _04GameOverUI();
             nextClassFrame.setVisible(true);
             dispose();
          }
