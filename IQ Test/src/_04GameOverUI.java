@@ -94,8 +94,9 @@ public class _04GameOverUI extends JFrame {
 
 	private JPanel createResultPanel() {
 		JPanel p = new JPanel(null);
-		resultNum = new JLabel("최종 점수 \" \" 점");
-		resultStr = new JLabel("오!! 당신은 범고래와 똑같은 지능이군요");
+		// 새로운 메소드를 사용해 점수와 문구 출력 예정
+		resultNum = new JLabel();
+		resultStr = new JLabel();
 
 		resultNum.setFont(new Font("굴림", Font.BOLD, 35));
 		resultStr.setFont(new Font("굴림", Font.BOLD, 23));
