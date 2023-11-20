@@ -28,11 +28,11 @@ public class _03GameUI extends JFrame {
    private LevelBar levelBar;
    private JLabel levelLabel;
    private JLabel startLabel;
-   private Timer startTimer;
    private JButton finalResultButton;
 
    private JButton levelCompleteButton;
    private static int currentLevel = 1;
+   private GameTimer gameTimer;
 
 
    public _03GameUI() {
@@ -48,13 +48,9 @@ public class _03GameUI extends JFrame {
       startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
       getContentPane().setLayout(null);
       getContentPane().add(startLabel);
-
-      startTimer = new Timer(3000, e -> {
-         startLabel.setVisible(false);
-         startGame();
-      });
-      startTimer.setRepeats(false);
-      startTimer.start();
+      
+      gameTimer = new GameTimer();
+      gameTimer.start();
 
       finalResultButton = new JButton("최종 결과 보기");
       finalResultButton.setBounds(560, 370, 150, 60);
@@ -156,7 +152,20 @@ public class _03GameUI extends JFrame {
       updateLevel(1);
       return p;
    }
-
+   
+   private class GameTimer extends Thread {
+	    @Override
+	    public void run() {
+	        try {
+	            sleep(3000); // 게임 시작 3초 대기
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+	        // 3초 대기 후 게임 시작
+	        startLabel.setVisible(false);
+	        startGame();
+	    }
+	}
 
    private void updateTimer() {
       if (--count > 0) {
@@ -166,9 +175,7 @@ public class _03GameUI extends JFrame {
          timerLabel.setText("X");
          gameOver();
       }
-
    }
-
 
    private void resetTimerLabel() {
       count = 7;
@@ -198,18 +205,14 @@ public class _03GameUI extends JFrame {
 
    private class LevelBar extends JPanel {
       private int level;
-
-
+      
       public LevelBar() {
          setPreferredSize(new Dimension(300, 20));
          level = 0;
       }
-
-
       public void setLevel(int level) {
          this.level = level;
       }
-
 
       @Override
       protected void paintComponent(Graphics g) {
@@ -398,7 +401,7 @@ public class _03GameUI extends JFrame {
       finalResultButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-        	 _04GameOverUI nextClassFrame = new _04GameOverUI();
+        	_04GameOverUI nextClassFrame = new _04GameOverUI();
             nextClassFrame.setVisible(true);
             dispose();
          }
