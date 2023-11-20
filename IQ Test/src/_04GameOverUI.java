@@ -76,7 +76,6 @@ public class _04GameOverUI extends JFrame {
 				dispose();
 			}
 		});
-		pack();
 
 		b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
 		b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));

@@ -403,6 +403,11 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	public void finalScore(int level) {
+
+	}
+
+
 	public static void main(String[] args) {
 		new _03GameUI();
 	}
