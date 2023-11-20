@@ -22,17 +22,21 @@ public class _03GameUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result, t_input;
+
 	private JLabel timerLabel;
-	private Timer timer;
-	private int count = 7;
-	private LevelBar levelBar;
 	private JLabel levelLabel;
 	private JLabel startLabel;
-	private JButton finalResultButton;
 
-	private JButton levelCompleteButton;
-	private static int currentLevel = 1;
 	private GameTimer gameTimer;
+	private Timer timer;
+
+	private JButton finalResultButton;
+	private JButton levelCompleteButton;
+
+	private int count = 7;
+	private static int currentLevel = 1;
+
+	private LevelBar levelBar;
 
 
 	public _03GameUI() {
@@ -42,6 +46,7 @@ public class _03GameUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setVisible(true);
 
 		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
 		startLabel.setBounds(170, 230, 500, 50);
@@ -64,7 +69,6 @@ public class _03GameUI extends JFrame {
 			}
 		});
 
-		setVisible(true);
 	}
 
 
@@ -72,7 +76,7 @@ public class _03GameUI extends JFrame {
 		buildGUI();
 		currentLevel = 1;
 		updateLevel(currentLevel);
-		generateRandomProblem(currentLevel);
+		levelTable(currentLevel);
 		timer.start();
 	}
 
@@ -90,7 +94,7 @@ public class _03GameUI extends JFrame {
 			public void actionPerformed(ActionEvent e) { // 레벨 업데이트
 				currentLevel++;
 				updateLevel(currentLevel);
-				generateRandomProblem(currentLevel);
+				levelTable(currentLevel);
 				levelCompleteButton.setEnabled(false);
 				timer.restart();
 				resetTimerLabel();
@@ -128,7 +132,7 @@ public class _03GameUI extends JFrame {
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
 
-		generateRandomProblem(4);
+		levelTable(1);
 	}
 
 
@@ -151,6 +155,7 @@ public class _03GameUI extends JFrame {
 		getContentPane().add(levelBar);
 
 		updateLevel(1);
+
 		return p;
 	}
 
@@ -294,7 +299,7 @@ public class _03GameUI extends JFrame {
 	}
 
 
-	private void generateRandomProblem(int level) {
+	private void levelTable(int level) {
 		Random rand = new Random();
 		int num1 = 0;
 		int num2 = 0;
@@ -350,7 +355,6 @@ public class _03GameUI extends JFrame {
 		t_operator1.setText(operator);
 		t_result.setText("?");
 
-		int result = 0;
 	}
 
 
