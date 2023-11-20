@@ -401,7 +401,7 @@ public class _03GameUI extends JFrame {
       finalResultButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-        	_04GameOverUI nextClassFrame = new _04GameOverUI();
+        	 _04GameOverUI nextClassFrame = new _04GameOverUI();
             nextClassFrame.setVisible(true);
             dispose();
          }
