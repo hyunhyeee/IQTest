@@ -46,6 +46,7 @@ public class _03GameUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setVisible(true);
 
 		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
 		startLabel.setBounds(170, 230, 500, 50);
@@ -71,8 +72,6 @@ public class _03GameUI extends JFrame {
 				gameOver();
 			}
 		});
-
-		setVisible(true);
 	}
 
 
