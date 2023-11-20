@@ -43,7 +43,7 @@ public class _03GameUI extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
+		startLabel = new JLabel("테스트가 3초 뒤 시작됩니다");
 		startLabel.setBounds(170, 230, 500, 50);
 		startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
 		getContentPane().setLayout(null);
@@ -299,8 +299,8 @@ public class _03GameUI extends JFrame {
 			break;
 		case 4:
 		case 5: // 레벨 4~5
-			num1 = rand.nextInt(12) + 2;
-			num2 = rand.nextInt(12) + 2;
+			num1 = rand.nextInt(15) + 2;
+			num2 = rand.nextInt(15) + 4;
 			operator = "*";
 			break;
 		case 6:
@@ -352,9 +352,7 @@ public class _03GameUI extends JFrame {
 				gameOver();
 			}
 
-		} catch (NumberFormatException ex) {
-			System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
-		}
+		} catch (NumberFormatException ex) {}
 
 	}
 
