@@ -351,7 +351,6 @@ public class _03GameUI extends JFrame {
 	        if (userAnswer == correctAnswer) {
 	            if (getCurrentLevel() == 10) {
 	            	gameOver();
-	                t_input.setEnabled(false);
 	            } else {
 	                levelCompleteButton.setEnabled(true);
 	                t_input.setEnabled(false);
