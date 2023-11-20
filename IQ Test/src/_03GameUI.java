@@ -22,17 +22,21 @@ public class _03GameUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result, t_input;
-	private JLabel timerLabel;
-	private Timer timer;
-	private int count = 7;
-	private LevelBar levelBar;
+
 	private JLabel levelLabel;
 	private JLabel startLabel;
-	private Timer startTimer;
-	private JButton finalResultButton;
+	private JLabel timerLabel;
 
+	private Timer timer;
+	private Timer startTimer;
+
+	private LevelBar levelBar;
+
+	private JButton finalResultButton;
 	private JButton levelCompleteButton;
+
 	private static int currentLevel = 1;
+	private int count = 7;
 
 
 	public _03GameUI() {
