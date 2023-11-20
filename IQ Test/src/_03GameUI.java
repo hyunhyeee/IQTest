@@ -28,11 +28,11 @@ public class _03GameUI extends JFrame {
 	private LevelBar levelBar;
 	private JLabel levelLabel;
 	private JLabel startLabel;
-	private Timer startTimer;
 	private JButton finalResultButton;
 
 	private JButton levelCompleteButton;
 	private static int currentLevel = 1;
+	private GameTimer gameTimer;
 
 
 	public _03GameUI() {
@@ -49,12 +49,8 @@ public class _03GameUI extends JFrame {
 		getContentPane().setLayout(null);
 		getContentPane().add(startLabel);
 
-		startTimer = new Timer(3000, e -> {
-			startLabel.setVisible(false);
-			startGame();
-		});
-		startTimer.setRepeats(false);
-		startTimer.start();
+		gameTimer = new GameTimer();
+		gameTimer.start();
 
 		finalResultButton = new JButton("최종 결과 보기");
 		finalResultButton.setBounds(560, 370, 150, 60);
@@ -159,6 +155,22 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	private class GameTimer extends Thread {
+		@Override
+		public void run() {
+			try {
+				sleep(3000); // 게임 시작 3초 대기
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			// 3초 대기 후 게임 시작
+			startLabel.setVisible(false);
+			startGame();
+		}
+	}
+
+
 	private void updateTimer() {
 		if (--count > 0) {
 			timerLabel.setText(Integer.toString(count));
@@ -174,6 +186,111 @@ public class _03GameUI extends JFrame {
 	private void resetTimerLabel() {
 		count = 7;
 		timerLabel.setText(Integer.toString(count));
+	}
+
+
+	private void updateLevel(int level) {
+		if (levelLabel == null) {
+			levelLabel = new JLabel("Level " + level);
+			levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			levelLabel.setBounds(5, 52, 150, 30);
+			Font labelFont = levelLabel.getFont();
+			levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
+			getContentPane().add(levelLabel);
+		} else {
+			// 이미 추가된 레벨 라벨이 있다면 내용만 업데이트
+			levelLabel.setText("Level " + level);
+		}
+
+		levelBar.setLevel(level);
+		levelBar.repaint();
+
+		repaint();
+	}
+
+
+	private class LevelBar extends JPanel {
+		private int level;
+
+
+		public LevelBar() {
+			setPreferredSize(new Dimension(300, 20));
+			level = 0;
+		}
+
+
+		public void setLevel(int level) {
+			this.level = level;
+		}
+
+
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+
+			int barWidth = getWidth();
+			int barHeight = getHeight();
+
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(0, 0, barWidth, barHeight);
+
+			g.setColor(Color.ORANGE);
+			int filledWidth = (int) (barWidth * (level / 10.0));
+			g.fillRect(0, 0, filledWidth, barHeight);
+
+			g.setColor(Color.BLACK);
+			for (int i = 1; i < 10; i++) {
+				int x = barWidth * i / 10;
+				g.drawLine(x, 0, x, barHeight);
+			}
+
+		}
+	}
+
+
+	private JPanel createQuestionPanel() {
+		JPanel p = new JPanel(null);
+		p.setBounds(0, 0, 786, 562);
+
+		t_operand1 = new JTextField(30);
+		t_operator1 = new JTextField(30);
+		t_operand2 = new JTextField(30);
+		t_operator2 = new JTextField(30);
+		t_result = new JTextField(30);
+
+		t_operand1.setHorizontalAlignment(SwingConstants.CENTER);
+		t_operator1.setHorizontalAlignment(SwingConstants.CENTER);
+		t_operand2.setHorizontalAlignment(SwingConstants.CENTER);
+		t_operator2.setHorizontalAlignment(SwingConstants.CENTER);
+		t_result.setHorizontalAlignment(SwingConstants.CENTER);
+
+		t_operand1.setBounds(85, 230, 90, 50);
+		t_operator1.setBounds(225, 230, 60, 50);
+		t_operand2.setBounds(340, 230, 90, 50);
+		t_operator2.setBounds(485, 230, 60, 50);
+		t_result.setBounds(600, 230, 90, 50);
+
+		p.add(t_operand1);
+		p.add(t_operator1);
+		p.add(t_operand2);
+		p.add(t_operator2);
+		p.add(t_result);
+
+		t_operator2.setText("=");
+
+		t_operand1.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_operator1.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_operand2.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_operator2.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_result.setFont(new Font("굴림", Font.PLAIN, 30));
+
+		t_operand1.setEditable(false);
+		t_operator1.setEditable(false);
+		t_operand2.setEditable(false);
+		t_operator2.setEditable(false);
+		t_result.setEditable(false);
+
+		return p;
 	}
 
 
@@ -237,32 +354,13 @@ public class _03GameUI extends JFrame {
 	}
 
 
-	private void updateLevel(int level) {
-		if (levelLabel == null) {
-			levelLabel = new JLabel("Level " + level);
-			levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-			levelLabel.setBounds(5, 52, 150, 30);
-			Font labelFont = levelLabel.getFont();
-			levelLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 25));
-			getContentPane().add(levelLabel);
-		} else {
-			// 이미 추가된 레벨 라벨이 있다면 내용만 업데이트
-			levelLabel.setText("Level " + level);
-		}
-
-	}
-
-
 	private void checkAnswer() {
 		int userAnswer = Integer.parseInt(t_input.getText());
 		int correctAnswer = calculateResult();
 
-		levelBar.setLevel(level);
-		levelBar.repaint();
 		if (userAnswer == correctAnswer) {
 			if (getCurrentLevel() == 10) {
 				gameOver();
-				t_input.setEnabled(false);
 			} else {
 				levelCompleteButton.setEnabled(true);
 				t_input.setEnabled(false);
@@ -270,240 +368,6 @@ public class _03GameUI extends JFrame {
 
 		} else {
 			gameOver();
-		}
-
-		repaint();
-	}
-
-
-	private int calculateResult() {
-		int num1 = Integer.parseInt(t_operand1.getText());
-		int num2 = Integer.parseInt(t_operand2.getText());
-		String operator = t_operator1.getText();
-		int result = 0;
-
-		switch (operator) {
-		case "+":
-			result = num1 + num2;
-			break;
-		case "-":
-			result = num1 - num2;
-			break;
-		case "*":
-			result = num1 * num2;
-			break;
-		case "/":
-			if (num2 != 0) {
-				result = num1 / num2;
-			} else {
-
-			}
-			break;
-		}
-
-		return result;
-	}
-
-
-	private class LevelBar extends JPanel {
-		private int level;
-
-
-		public LevelBar() {
-			setPreferredSize(new Dimension(300, 20));
-			level = 0;
-
-			finalResultButton.setVisible(true);
-			finalResultButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					_04GameOverUI nextClassFrame = new _04GameOverUI();
-					nextClassFrame.setVisible(true);
-					dispose();
-				}
-			});
-		}
-	}
-
-
-	public static int getCurrentLevel() {
-		return currentLevel;
-	}
-
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-
-		int barWidth = getWidth();
-		int barHeight = getHeight();
-
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(0, 0, barWidth, barHeight);
-
-		g.setColor(Color.ORANGE);
-		int filledWidth = (int) (barWidth * (level / 10.0));
-		g.fillRect(0, 0, filledWidth, barHeight);
-
-		g.setColor(Color.BLACK);
-		for (int i = 1; i < 10; i++) {
-			int x = barWidth * i / 10;
-			g.drawLine(x, 0, x, barHeight);
-		}
-
-	}
-
-
-	}
-
-
-	private JPanel createQuestionPanel() {
-		JPanel p = new JPanel(null);
-		p.setBounds(0, 0, 786, 562);
-
-		t_operand1 = new JTextField(30);
-		t_operator1 = new JTextField(30);
-		t_operand2 = new JTextField(30);
-		t_operator2 = new JTextField(30);
-		t_result = new JTextField(30);
-
-		t_operand1.setHorizontalAlignment(SwingConstants.CENTER);
-		t_operator1.setHorizontalAlignment(SwingConstants.CENTER);
-		t_operand2.setHorizontalAlignment(SwingConstants.CENTER);
-		t_operator2.setHorizontalAlignment(SwingConstants.CENTER);
-		t_result.setHorizontalAlignment(SwingConstants.CENTER);
-
-		t_operand1.setBounds(85, 230, 90, 50);
-		t_operator1.setBounds(225, 230, 60, 50);
-		t_operand2.setBounds(340, 230, 90, 50);
-		t_operator2.setBounds(485, 230, 60, 50);
-		t_result.setBounds(600, 230, 90, 50);
-
-		p.add(t_operand1);
-		p.add(t_operator1);
-		p.add(t_operand2);
-		p.add(t_operator2);
-		p.add(t_result);
-
-		t_operator2.setText("=");
-
-		t_operand1.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_operator1.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_operand2.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_operator2.setFont(new Font("굴림", Font.PLAIN, 30));
-		t_result.setFont(new Font("굴림", Font.PLAIN, 30));
-
-		t_operand1.setEditable(false);
-		t_operator1.setEditable(false);
-		t_operand2.setEditable(false);
-		t_operator2.setEditable(false);
-		t_result.setEditable(false);
-
-		return p;
-	}
-
-
-	private void generateRandomProblem(int level) {
-		Random rand = new Random();
-		int num1 = 0;
-		int num2 = 0;
-
-		String operator = " ";
-
-		switch (level) {
-		case 1:
-		case 2:
-		case 3: // 레벨 1~3
-			num1 = rand.nextInt(15) + 1;
-			num2 = rand.nextInt(15) + 1;
-			String[] operators1 = { "+", "-" };
-			operator = operators1[rand.nextInt(operators1.length)];
-			break;
-		case 4:
-		case 5: // 레벨 4~5
-			num1 = rand.nextInt(12) + 2;
-			num2 = rand.nextInt(12) + 2;
-			operator = "*";
-			break;
-		case 6:
-		case 7:
-		case 8: // 레벨 6~8
-			num1 = rand.nextInt(500) + 60;
-			num2 = rand.nextInt(500) + 60;
-			String[] operators2 = { "+", "-" };
-			operator = operators2[rand.nextInt(operators2.length)];
-			break;
-		case 9:
-		case 10: // 레벨 9~10
-			num1 = rand.nextInt(45) + 4;
-			num2 = rand.nextInt(45) + 4;
-			String[] operators3 = { "*", "/" };
-			operator = operators3[rand.nextInt(operators3.length)];
-			List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);
-			while (operator.equals("/")
-			    && (num1 <= num2 || excludedNumbers.contains(num2) || num1 == num2
-			        || num1 % num2 != 0)) {
-				num1 = rand.nextInt(200) + 10;
-				num2 = rand.nextInt(15) + 2;
-			}
-			if (operator.equals("/")) {
-				num1 -= num1 % num2;
-			}
-			break;
-		default:
-			break;
-		}
-
-		t_operand1.setText(String.valueOf(num1));
-		t_operand2.setText(String.valueOf(num2));
-		t_operator1.setText(operator);
-		t_result.setText("?");
-
-		int result = 0;
-
-		switch (operator) {
-		case "+":
-			result = num1 + num2;
-			break;
-		case "-":
-			result = num1 - num2;
-			break;
-		case "*":
-			result = num1 * num2;
-			break;
-		case "/":
-			if (num2 != 0) {
-				result = num1 / num2;
-			} else {
-
-			}
-			break;
-		default:
-			break;
-		}
-
-	}
-
-
-	private void checkAnswer() {
-		try {
-			int userAnswer = Integer.parseInt(t_input.getText());
-			int correctAnswer = calculateResult();
-
-			if (userAnswer == correctAnswer) {
-				levelCompleteButton.setEnabled(true);
-				t_input.setEnabled(false);
-			} else {
-				gameOver();
-			}
-
-		} catch (NumberFormatException ex) {
-			System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
 		}
 
 	}
