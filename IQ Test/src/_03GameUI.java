@@ -1,3 +1,5 @@
+// 03. 게임 진행 화면
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -390,10 +392,10 @@ public class _03GameUI extends JFrame {
 		int userAnswer = Integer.parseInt(t_input.getText()); // 사용자 입력 값 가져오기
 		int correctAnswer = calculateResult(); // 정답 계산
 
-		if (userAnswer == correctAnswer) {
+		if (userAnswer == correctAnswer) { // 10단계 클리어시 최종화면 버튼 활성화
 			if (getCurrentLevel() == 10) {
 				gameOver();
-			} else {
+			} else { // 오답시 최종화면 버튼 활성화
 				levelCompleteButton.setEnabled(true);
 				t_input.setEnabled(false);
 			}

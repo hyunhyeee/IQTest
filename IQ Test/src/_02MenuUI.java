@@ -1,4 +1,4 @@
-// 객지 메뉴 화면 구성 완료
+// 02. 게임 메뉴 화면
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-// 객지 게임 시작화면 구현 완료
+// 01. 게임 첫 시작 호면
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,10 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-//setLocation((int)((dmen.width - getSize().width)/2), 
-//(int)((dmen.height - getSize().height))/2);
-// 어떤 환경이든 위치를 정중앙에 배치
 
 
 // 시작화면

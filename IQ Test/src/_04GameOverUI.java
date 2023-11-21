@@ -1,3 +1,5 @@
+// 04. 게임 종료시 최종화면
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
