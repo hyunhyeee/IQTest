@@ -40,6 +40,7 @@ public class _03GameUI extends JFrame {
 
 
 	public _03GameUI() {
+		// JFrame 설정
 		super("게임 메인 화면 구성");
 
 		setSize(800, 600);
@@ -48,6 +49,7 @@ public class _03GameUI extends JFrame {
 		setResizable(false);
 		setVisible(true);
 
+		// 시작을 나타내는 레이블 설정, 3초 후 게임 시작을 담당하는 GameTimer 초기화
 		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
 		startLabel.setBounds(170, 230, 500, 50);
 		startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
@@ -57,6 +59,7 @@ public class _03GameUI extends JFrame {
 		gameTimer = new GameTimer();
 		gameTimer.start();
 
+		// 최종 결과 보기 버튼 초기화
 		finalResultButton = new JButton("최종 결과 보기");
 		finalResultButton.setBounds(560, 370, 150, 60);
 		getContentPane().add(finalResultButton);
@@ -73,17 +76,19 @@ public class _03GameUI extends JFrame {
 
 
 	public void startGame() {
-		buildGUI();
-		currentLevel = 1;
+		buildGUI(); // 메서드 호출
+		currentLevel = 1; // 초기 레벨 설정
 		updateLevel(currentLevel);
 		levelTable(currentLevel);
-		timer.start();
+		timer.start(); // 타이머 시작 설정
 	}
 
 
+	// UI 구성 메소드
 	private void buildGUI() {
 		getContentPane().setLayout(null);
 
+		// "다음->" 버튼 생성 및 설정
 		levelCompleteButton = new JButton("다음->");
 		levelCompleteButton.setBounds(560, 370, 150, 60);
 		getContentPane().add(levelCompleteButton);
@@ -91,7 +96,8 @@ public class _03GameUI extends JFrame {
 
 		levelCompleteButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) { // 레벨 업데이트
+			public void actionPerformed(ActionEvent e) {
+				// "디음->" 버튼 동작 기능 설정
 				currentLevel++;
 				updateLevel(currentLevel);
 				levelTable(currentLevel);
@@ -106,12 +112,13 @@ public class _03GameUI extends JFrame {
 		Font buttonFont = levelCompleteButton.getFont();
 		levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
 
-		t_input = new JTextField(30);
-		JButton b_send = new JButton("보내기");
+		t_input = new JTextField(30); // 보내기 입력창 설정
+		JButton b_send = new JButton("보내기"); // "보내기" 버튼 설정
 
 		ActionListener sendActionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// 보내기 버튼 동작 기능 설정
 				checkAnswer();
 				timer.stop();
 			}
@@ -120,46 +127,53 @@ public class _03GameUI extends JFrame {
 		b_send.addActionListener(sendActionListener);
 		t_input.addActionListener(sendActionListener); // 엔터 키 입력 처리
 
+		// 위치 설정
 		t_input.setBounds(0, 522, 692, 45);
 		b_send.setBounds(690, 522, 100, 45);
 
+		// 화면에 추가
 		add(t_input);
 		add(b_send);
 
+		// 기능 황성화
 		t_input.setEnabled(true);
 		b_send.setEnabled(true);
 
+		// 화면 구성 메소드 호출
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
 
+		// 레벨 난이도 문제 초기화
 		levelTable(1);
 	}
 
 
 	private JPanel createDisplayPanel() {
+		// 디스플레이를 담당하는 패널 생성
 		JPanel p = new JPanel();
-		p.setBounds(0, 0, 0, 0);
-		p.setLayout(null);
+		p.setBounds(0, 0, 0, 0); // 패널의 위치, 크기 설정
+		p.setLayout(null); // 레이아웃 null로 설정
 
 		t_display = new JTextArea();
-		t_display.setEditable(false);
+		t_display.setEditable(false); // 편집 불가능으로 설정
 
 		timerLabel = new JLabel(Integer.toString(count));
-		timerLabel.setBounds(665, 38, 450, 60);
-		timerLabel.setFont(new Font("Arial", Font.BOLD, 45));
-		getContentPane().add(timerLabel);
+		timerLabel.setBounds(665, 38, 450, 60); // 위치 크기 설정
+		timerLabel.setFont(new Font("Arial", Font.BOLD, 45)); // 폰트 설정
+		getContentPane().add(timerLabel); // 프레임에 추가
 
 		timer = new Timer(1000, e -> updateTimer());
 		levelBar = new LevelBar();
-		levelBar.setBounds(210, 50, 370, 35);
-		getContentPane().add(levelBar);
+		levelBar.setBounds(210, 50, 370, 35); // 레벨 바의 위치와 크기를 설정
+		getContentPane().add(levelBar); // 레벨 바를 프레임에 추가
 
-		updateLevel(1);
+		updateLevel(1); // 메서드 호출, 초기 레벨 표시
 
 		return p;
 	}
 
 
+	// 게임 UI와 로직을 담당
 	private class GameTimer extends Thread {
 		@Override
 		public void run() {
@@ -170,32 +184,36 @@ public class _03GameUI extends JFrame {
 			}
 
 			// 3초 대기 후 게임 시작
-			startLabel.setVisible(false);
-			startGame();
+			startLabel.setVisible(false); // 시작 레이블 숨김
+			startGame(); // 게임 시작
 		}
 	}
 
 
+	// 타이머 업데이트 메서드
 	private void updateTimer() {
 		if (--count > 0) {
-			timerLabel.setText(Integer.toString(count));
+			timerLabel.setText(Integer.toString(count)); // 타이머 감소 및 표시
 		} else {
-			timer.stop();
-			timerLabel.setText("X");
-			gameOver();
+			timer.stop(); // 타이머 정지
+			timerLabel.setText("X"); // 시간 초과 표시
+			gameOver(); // 게임 오버 처리
 		}
 
 	}
 
 
+	// 타이머 라벨 초기화 메서드
 	private void resetTimerLabel() {
 		count = 7;
-		timerLabel.setText(Integer.toString(count));
+		timerLabel.setText(Integer.toString(count)); // 타이머 초기화
 	}
 
 
+	// 레벨 표시, 업데이트 메서드
 	private void updateLevel(int level) {
 		if (levelLabel == null) {
+			// 레벨 라벨 생성
 			levelLabel = new JLabel("Level " + level);
 			levelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			levelLabel.setBounds(5, 52, 150, 30);
@@ -207,25 +225,26 @@ public class _03GameUI extends JFrame {
 			levelLabel.setText("Level " + level);
 		}
 
-		levelBar.setLevel(level);
-		levelBar.repaint();
+		levelBar.setLevel(level); // 레벨 바 업데이트
+		levelBar.repaint(); // 레벨 바 다시 그리기
 
-		repaint();
+		repaint(); // 화면 갱신
 	}
 
 
+	// 레벨을 나타내는 바를 그리는 클래스
 	private class LevelBar extends JPanel {
 		private int level;
 
 
 		public LevelBar() {
-			setPreferredSize(new Dimension(300, 20));
+			setPreferredSize(new Dimension(300, 20)); // 사이즈 설정
 			level = 0;
 		}
 
 
 		public void setLevel(int level) {
-			this.level = level;
+			this.level = level; // 레벨 설정
 		}
 
 
@@ -233,6 +252,7 @@ public class _03GameUI extends JFrame {
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 
+			// 레벨 바 그리기
 			int barWidth = getWidth();
 			int barHeight = getHeight();
 
@@ -253,10 +273,12 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	// 문제 패널 생성 메서드
 	private JPanel createQuestionPanel() {
 		JPanel p = new JPanel(null);
 		p.setBounds(0, 0, 786, 562);
 
+		// 각각 숫자와 연산자 입력 필드 생성 및 설정
 		t_operand1 = new JTextField(30);
 		t_operator1 = new JTextField(30);
 		t_operand2 = new JTextField(30);
@@ -299,6 +321,7 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	// 레벨에 따라 다른 종류의 문제 생성
 	private void levelTable(int level) {
 		Random rand = new Random();
 		int num1 = 0;
@@ -307,30 +330,34 @@ public class _03GameUI extends JFrame {
 		String operator = " ";
 
 		switch (level) {
+		// 레벨 1~3
 		case 1:
 		case 2:
-		case 3: // 레벨 1~3
+		case 3:
 			num1 = rand.nextInt(20) + 1;
 			num2 = rand.nextInt(15) + 1;
 			String[] operators1 = { "+", "-" };
 			operator = operators1[rand.nextInt(operators1.length)];
 			break;
+		// 레벨 4~5
 		case 4:
-		case 5: // 레벨 4~5
+		case 5:
 			num1 = rand.nextInt(12) + 2;
 			num2 = rand.nextInt(10) + 2;
 			operator = "*";
 			break;
+		// 레벨 6~8
 		case 6:
 		case 7:
-		case 8: // 레벨 6~8
+		case 8:
 			num1 = rand.nextInt(500) + 100;
 			num2 = rand.nextInt(500) + 100;
 			String[] operators2 = { "+", "-" };
 			operator = operators2[rand.nextInt(operators2.length)];
 			break;
+		// 레벨 9~10
 		case 9:
-		case 10: // 레벨 9~10
+		case 10:
 			num1 = rand.nextInt(45) + 10;
 			num2 = rand.nextInt(45) + 10;
 			String[] operators3 = { "*", "/" };
@@ -358,9 +385,10 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	// 사용자의 답 체크 메서드
 	private void checkAnswer() {
-		int userAnswer = Integer.parseInt(t_input.getText());
-		int correctAnswer = calculateResult();
+		int userAnswer = Integer.parseInt(t_input.getText()); // 사용자 입력 값 가져오기
+		int correctAnswer = calculateResult(); // 정답 계산
 
 		if (userAnswer == correctAnswer) {
 			if (getCurrentLevel() == 10) {
@@ -377,28 +405,26 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	// 계산 결과 메서드
 	private int calculateResult() {
-		int num1 = Integer.parseInt(t_operand1.getText());
-		int num2 = Integer.parseInt(t_operand2.getText());
-		String operator = t_operator1.getText();
-		int result = 0;
+		int num1 = Integer.parseInt(t_operand1.getText()); // 첫 번째 피연산자
+		int num2 = Integer.parseInt(t_operand2.getText()); // 두 번째 피연산자
+		String operator = t_operator1.getText(); // 연산자
+		int result = 0; // 결과 값 초기화
 
+		// 연산자에 따른 계산 수행
 		switch (operator) {
 		case "+":
-			result = num1 + num2;
+			result = num1 + num2; // 더하기
 			break;
 		case "-":
-			result = num1 - num2;
+			result = num1 - num2; // 뺴기
 			break;
 		case "*":
-			result = num1 * num2;
+			result = num1 * num2; // 곱하기
 			break;
 		case "/":
-			if (num2 != 0) {
-				result = num1 / num2;
-			} else {
-
-			}
+			result = num1 / num2; // 나누기
 			break;
 		}
 
@@ -406,29 +432,32 @@ public class _03GameUI extends JFrame {
 	}
 
 
+	// 게임 종료 처리 메서드
 	private void gameOver() {
-		timer.stop();
-		startLabel.setVisible(false);
-		t_input.setEnabled(false);
+		timer.stop(); // 타이머 정지
+		startLabel.setVisible(false); // 시작 레이블 숨기기
+		t_input.setEnabled(false); // 입력 필드 비활성화
 
+		// 버튼 기능 동작 추가
 		finalResultButton.setVisible(true);
 		finalResultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_04GameOverUI nextClassFrame = new _04GameOverUI();
-				nextClassFrame.setVisible(true);
-				dispose();
+				nextClassFrame.setVisible(true); // 보이게 표시
+				dispose(); // 현재 창 닫기
 			}
 		});
 	}
 
 
+	// 현재 레벨을 반환하는 메서드
 	public static int getCurrentLevel() {
-		return currentLevel;
+		return currentLevel; // 현재 레벨 번환
 	}
 
 
 	public static void main(String[] args) {
-		new _03GameUI();
+		new _03GameUI(); // 객체 생성
 	}
 }

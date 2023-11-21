@@ -22,25 +22,26 @@ public class _04GameOverUI extends JFrame {
 	public _04GameOverUI() {
 		super("게임 종료 화면 구성");
 
+		// 메서드 호출
 		buildGUI(_03GameUI.getCurrentLevel());
 
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		setLocationRelativeTo(null);
 		setResizable(false);
-
 		setVisible(true);
 	}
 
 
+	// UI 요소를 구성하는 메서드 호출
 	private void buildGUI(int level) {
-		add(createDisplayPanel());
-		add(createResultPanel(level));
-		add(createInputPanel(), BorderLayout.SOUTH);
+		add(createDisplayPanel()); // 텍스트 표시 패널 생성 및 추가
+		add(createResultPanel(level)); // 최종 결과 표시 패널 생성 및 추가
+		add(createInputPanel(), BorderLayout.SOUTH); // 입력 패널 생성 및 하단에 추가
 	}
 
 
+	// 텍스트 표시 패널 메서드
 	private JPanel createDisplayPanel() {
 		JPanel p = new JPanel(null);
 		t_display = new JTextArea();
@@ -49,9 +50,11 @@ public class _04GameOverUI extends JFrame {
 	}
 
 
+	// 입력 버튼 메서드
 	private JPanel createInputPanel() {
 		JPanel p = new JPanel(new GridLayout());
 		JButton b_restart = new JButton("재시작하기");
+		// "재시작하기" 버튼 클릭 시 동작 기능 설정
 		b_restart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -62,6 +65,7 @@ public class _04GameOverUI extends JFrame {
 		});
 
 		JButton b_exit = new JButton("나가기");
+		// "나가기" 버튼 클릭시 동작 기능 설정
 		b_exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -70,13 +74,14 @@ public class _04GameOverUI extends JFrame {
 				dispose();
 			}
 		});
+		// 버튼 크기 설정, 패널 추가
 		pack();
 		b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
 		b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));
-
 		p.add(b_restart);
 		p.add(b_exit);
 
+		// 버튼 폰트 설정
 		Font buttonFont = b_restart.getFont();
 		b_restart.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
 		b_exit.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
@@ -84,27 +89,28 @@ public class _04GameOverUI extends JFrame {
 	}
 
 
+	// 최종 결과를 보여주는 패널 생성
 	private JPanel createResultPanel(int level) {
 		JPanel p = new JPanel(null);
 		resultNum = new JLabel("최종 점수: " + level + " 점");
 		resultStr = new JLabel(getResultMessage(level));
 
+		// 라벨 폰트, 위치 설정
 		resultNum.setFont(new Font("굴림", Font.BOLD, 35));
 		resultStr.setFont(new Font("굴림", Font.BOLD, 23));
-
 		resultNum.setHorizontalAlignment(SwingConstants.CENTER);
 		resultStr.setHorizontalAlignment(SwingConstants.CENTER);
-
 		resultNum.setBounds(149, 209, 471, 87);
 		resultStr.setBounds(159, 288, 453, 63);
 
+		// 라벨 추가
 		p.add(resultNum);
 		p.add(resultStr);
-
 		return p;
 	}
 
 
+	// 각 레벨에 따른 결과 메시지 반환
 	private String getResultMessage(int level) {
 		if (level == 1) {
 			return "혹시 당신은... 0살? ";
@@ -132,6 +138,6 @@ public class _04GameOverUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new _04GameOverUI();
+		new _04GameOverUI(); // 객체 호출
 	}
 }
