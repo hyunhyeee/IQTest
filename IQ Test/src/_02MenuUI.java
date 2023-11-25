@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+// 응애
 public class _02MenuUI extends JFrame {
 
 	public _02MenuUI() {
