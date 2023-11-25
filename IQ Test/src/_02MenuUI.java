@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+// 응애
 public class _02MenuUI extends JFrame {
 
 	public _02MenuUI() {
@@ -38,7 +39,7 @@ public class _02MenuUI extends JFrame {
 		add(title);
 
 		// 이미지 표시하는 패널 설정
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/java_pic.jpg");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/test_pic.jpg");
 		backgroundPanel.setSize(new Dimension(800, 600));
 		add(backgroundPanel);
 
