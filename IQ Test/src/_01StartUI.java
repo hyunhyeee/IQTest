@@ -83,7 +83,7 @@ public class _01StartUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new _01StartUI(); // 시작화묜 객체 설정
+		new _01StartUI(); // 시작화면 객체 설정
 	}
 
 }
