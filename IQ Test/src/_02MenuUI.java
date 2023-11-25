@@ -1,9 +1,11 @@
+
 // 02. 게임 메뉴 화면
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,11 +18,15 @@ import javax.swing.JPanel;
 
 // 응애
 public class _02MenuUI extends JFrame {
+	private BackgroundMusicPlayer musicPlayer;
+	private JButton musicButton;
+
 
 	public _02MenuUI() {
 
 		buildGUI(); // GUI를 구성한 메소드 호출
-
+		musicPlayer = new BackgroundMusicPlayer();
+		musicPlayer.playBackgroundMusic();
 		setTitle("메뉴 화면 구성"); // 타이틀 설정
 		setSize(800, 600); // 크기 설정
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 닫기 설정
@@ -37,7 +43,40 @@ public class _02MenuUI extends JFrame {
 		Font labelFont = title.getFont();
 		title.setFont(new Font(labelFont.getName(), Font.PLAIN, 30));
 		add(title);
+		ImageIcon soundOnIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOn.png"));
+		ImageIcon soundOffIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOff.png"));
 
+		// 이미지 크기 고정
+		Image imgOn = soundOnIcon.getImage();
+		Image imgOff = soundOffIcon.getImage();
+		Image scaledImgOn = imgOn.getScaledInstance(65, 40, Image.SCALE_SMOOTH);
+		Image scaledImgOff = imgOff.getScaledInstance(65, 40, Image.SCALE_SMOOTH);
+
+		// 이미지 아이콘 크기에 맞춰 버튼 크기 조정
+		ImageIcon scaledSoundOnIcon = new ImageIcon(scaledImgOn);
+		ImageIcon scaledSoundOffIcon = new ImageIcon(scaledImgOff);
+
+		musicButton = new JButton(scaledSoundOnIcon); // 초기 이미지 아이콘 설정
+		musicButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				musicPlayer.toggleMusic();
+				if (musicPlayer.isMusicOn()) {
+
+					musicButton.setIcon(scaledSoundOnIcon); // 음악이 꺼진 상태의 이미지로 변경
+				} else {
+
+					musicButton.setIcon(scaledSoundOffIcon); // 음악이 켜진 상태의 이미지로 변경
+				}
+
+			}
+		});
+		musicButton.setBounds(720, 0, 65, 40);
+		musicButton.setContentAreaFilled(false); // 배경색 제거
+		musicButton.setBorderPainted(false); // 테두리 없애기
+		musicButton.setFocusPainted(false); // 글씨 테두리 없애기
+
+		add(musicButton);
 		// 이미지 표시하는 패널 설정
 		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/test_pic.jpg");
 		backgroundPanel.setSize(new Dimension(800, 600));

@@ -7,16 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,14 +17,15 @@ import javax.swing.JPanel;
 
 // 시작화면
 public class _01StartUI extends JFrame {
-	private Clip backgroundClip;
-	private boolean isMusicOn = true; // 음악 상태를 저장할 변수
-	private long pausedTime = 0; // 멈춘 시간을 저장할 변수
+
+	public BackgroundMusicPlayer musicPlayer;
+	public JButton musicButton;
 
 
 	public _01StartUI() {
 		setLayout(null); // 레이아웃 종류 설정
-		playBackgroundMusic();
+		musicPlayer = new BackgroundMusicPlayer();
+		musicPlayer.playBackgroundMusic();
 		// "당신의 지능은 몇살인가요?"라는 제목을 가진 라벨 생성
 		JLabel title = new JLabel("두뇌 건강 테스트");
 		title.setBounds(210, 100, 1000, 100); // 위치 크기 설정
@@ -77,30 +69,32 @@ public class _01StartUI extends JFrame {
 		ImageIcon scaledSoundOnIcon = new ImageIcon(scaledImgOn);
 		ImageIcon scaledSoundOffIcon = new ImageIcon(scaledImgOff);
 
-		JButton musicButton = new JButton(scaledSoundOnIcon); // 초기 이미지 아이콘 설정
+		musicButton = new JButton(scaledSoundOnIcon); // 초기 이미지 아이콘 설정
+		musicButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				musicPlayer.toggleMusic();
+				if (musicPlayer.isMusicOn()) {
+
+					musicButton.setIcon(scaledSoundOnIcon); // 음악이 꺼진 상태의 이미지로 변경
+				} else {
+
+					musicButton.setIcon(scaledSoundOffIcon); // 음악이 켜진 상태의 이미지로 변경
+				}
+
+			}
+		});
 		musicButton.setBounds(720, 0, 65, 40);
 		musicButton.setContentAreaFilled(false); // 배경색 제거
 		musicButton.setBorderPainted(false); // 테두리 없애기
 		musicButton.setFocusPainted(false); // 글씨 테두리 없애기
+
 		add(musicButton);
-
-		musicButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (isMusicOn) {
-					stopBackgroundMusic();
-					musicButton.setIcon(scaledSoundOffIcon); // 음악이 꺼진 상태의 이미지로 변경
-				} else {
-					playBackgroundMusic();
-					musicButton.setIcon(scaledSoundOnIcon); // 음악이 켜진 상태의 이미지로 변경
-				}
-
-				isMusicOn = !isMusicOn;
-			}
-		});
 		// 이미지를 표시할 패널 생성
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/test_pic.jpg");
+		ImagePanel backgroundPanel = new ImagePanel(
+		    "/Game_pic/test_pic.jpg");
 		backgroundPanel.setSize(new Dimension(800, 600)); // 크기 설정
+
 		add(backgroundPanel); // 프레임에 추가
 
 		setTitle("지능테스트 첫 화면"); // 타이틀 설정
@@ -110,46 +104,6 @@ public class _01StartUI extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 설정
 		setVisible(true); // 프레임이 보이도록 설정
-
-	}
-
-
-	private void playBackgroundMusic() {
-		try {
-			String audioFilePath = "/audioFile/b_sound.wav"; // 오디오 파일 경로
-			AudioInputStream audioStream = AudioSystem
-			    .getAudioInputStream(getClass().getResource(audioFilePath));
-			AudioFormat format = audioStream.getFormat();
-			DataLine.Info info = new DataLine.Info(Clip.class, format);
-
-			backgroundClip = (Clip) AudioSystem.getLine(info);
-			backgroundClip.open(audioStream);
-
-			// 볼륨조절
-			FloatControl gainControl = (FloatControl) backgroundClip
-			    .getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-25.0f);
-
-			// 일시정지된 시간을 빼서 원래 위치에서 재생
-			backgroundClip.setMicrosecondPosition(
-			    pausedTime);
-
-			backgroundClip.start();
-			backgroundClip.loop(Clip.LOOP_CONTINUOUSLY);
-
-		} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-
-	private void stopBackgroundMusic() {
-		if (backgroundClip != null && backgroundClip.isOpen()) {
-			pausedTime = backgroundClip.getMicrosecondPosition(); // 일시정지된 시간 저장
-			backgroundClip.stop();
-			backgroundClip.close();
-		}
 
 	}
 
