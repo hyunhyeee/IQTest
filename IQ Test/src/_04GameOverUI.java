@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,10 +22,48 @@ public class _04GameOverUI extends JFrame {
 	private JTextArea t_display;
 	private JLabel resultNum, resultStr;
 
+	public BackgroundMusicPlayer musicPlayer;
+	public JButton musicButton;
+
 
 	public _04GameOverUI() {
 		super("게임 종료 화면 구성");
+		musicPlayer = new BackgroundMusicPlayer();
+		musicPlayer.playBackgroundMusic();
+		ImageIcon soundOnIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOn.png"));
+		ImageIcon soundOffIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOff.png"));
 
+		// 이미지 크기 고정
+		Image imgOn = soundOnIcon.getImage();
+		Image imgOff = soundOffIcon.getImage();
+		Image scaledImgOn = imgOn.getScaledInstance(65, 40, Image.SCALE_SMOOTH);
+		Image scaledImgOff = imgOff.getScaledInstance(65, 40, Image.SCALE_SMOOTH);
+
+		// 이미지 아이콘 크기에 맞춰 버튼 크기 조정
+		ImageIcon scaledSoundOnIcon = new ImageIcon(scaledImgOn);
+		ImageIcon scaledSoundOffIcon = new ImageIcon(scaledImgOff);
+
+		musicButton = new JButton(scaledSoundOnIcon); // 초기 이미지 아이콘 설정
+		musicButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				musicPlayer.toggleMusic();
+				if (musicPlayer.isMusicOn()) {
+
+					musicButton.setIcon(scaledSoundOnIcon); // 음악이 꺼진 상태의 이미지로 변경
+				} else {
+
+					musicButton.setIcon(scaledSoundOffIcon); // 음악이 켜진 상태의 이미지로 변경
+				}
+
+			}
+		});
+		musicButton.setBounds(720, 0, 65, 40);
+		musicButton.setContentAreaFilled(false); // 배경색 제거
+		musicButton.setBorderPainted(false); // 테두리 없애기
+		musicButton.setFocusPainted(false); // 글씨 테두리 없애기
+
+		add(musicButton);
 		// 메서드 호출
 		buildGUI(_03GameUI.getCurrentLevel());
 
@@ -115,25 +155,25 @@ public class _04GameOverUI extends JFrame {
 	// 각 레벨에 따른 결과 메시지 반환
 	private String getResultMessage(int level) {
 		if (level == 1) {
-			return "혹시 당신은... 0살? ";
+			return "재검진이 시급합니다";
 		} else if (level == 2) {
-			return "뇌가 순수하시네요";
+			return "재검진이 필요합니다";
 		} else if (level == 3) {
-			return "혹시 몇짤이신가요??";
+			return "추가 검진이 시급합니다";
 		} else if (level == 4) {
-			return "이걸 틀리셨어요???";
+			return "추가 검진을 권장합니다";
 		} else if (level == 5) {
-			return "반타작은 하셨군요";
+			return "주기적 검진이 필요합니다";
 		} else if (level == 6) {
-			return "오 당신은 평균 이상이군요";
+			return "주기적 검진을 권장합니다";
 		} else if (level == 7) {
-			return "레벨 7: 오 좀 치시는군요";
+			return "차후에 재검진을 권장합니다";
 		} else if (level == 8) {
-			return "HOXY 노력형 천재??";
+			return "정상입니다";
 		} else if (level == 9) {
-			return "천재??";
+			return "정상입니다";
 		} else {
-			return "맨사 가즈아~~";
+			return "정상입니다";
 		}
 
 	}

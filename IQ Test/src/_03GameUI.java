@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,11 +42,15 @@ public class _03GameUI extends JFrame {
 
 	private LevelBar levelBar;
 
+	public BackgroundMusicPlayer musicPlayer;
+	public JButton musicButton;
+
 
 	public _03GameUI() {
 		// JFrame 설정
 		super("게임 메인 화면 구성");
-
+		musicPlayer = new BackgroundMusicPlayer();
+		musicPlayer.playBackgroundMusic();
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -73,6 +79,40 @@ public class _03GameUI extends JFrame {
 				gameOver();
 			}
 		});
+		ImageIcon soundOnIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOn.png"));
+		ImageIcon soundOffIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOff.png"));
+
+		// 이미지 크기 고정
+		Image imgOn = soundOnIcon.getImage();
+		Image imgOff = soundOffIcon.getImage();
+		Image scaledImgOn = imgOn.getScaledInstance(65, 40, Image.SCALE_SMOOTH);
+		Image scaledImgOff = imgOff.getScaledInstance(65, 40, Image.SCALE_SMOOTH);
+
+		// 이미지 아이콘 크기에 맞춰 버튼 크기 조정
+		ImageIcon scaledSoundOnIcon = new ImageIcon(scaledImgOn);
+		ImageIcon scaledSoundOffIcon = new ImageIcon(scaledImgOff);
+
+		musicButton = new JButton(scaledSoundOnIcon); // 초기 이미지 아이콘 설정
+		musicButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				musicPlayer.toggleMusic();
+				if (musicPlayer.isMusicOn()) {
+
+					musicButton.setIcon(scaledSoundOnIcon); // 음악이 꺼진 상태의 이미지로 변경
+				} else {
+
+					musicButton.setIcon(scaledSoundOffIcon); // 음악이 켜진 상태의 이미지로 변경
+				}
+
+			}
+		});
+		musicButton.setBounds(720, 0, 65, 40);
+		musicButton.setContentAreaFilled(false); // 배경색 제거
+		musicButton.setBorderPainted(false); // 테두리 없애기
+		musicButton.setFocusPainted(false); // 글씨 테두리 없애기
+
+		add(musicButton);
 
 	}
 
@@ -141,6 +181,7 @@ public class _03GameUI extends JFrame {
 		t_input.setEnabled(true);
 		b_send.setEnabled(true);
 
+		t_input.requestFocusInWindow();
 		// 화면 구성 메소드 호출
 		getContentPane().add(createDisplayPanel());
 		getContentPane().add(createQuestionPanel());
