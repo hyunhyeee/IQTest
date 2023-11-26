@@ -57,9 +57,9 @@ public class _03GameUI extends JFrame {
 		setResizable(false);
 		setVisible(true);
 
-		// 시작을 나타내는 레이블 설정, 3초 후 게임 시작을 담당하는 GameTimer 초기화
-		startLabel = new JLabel("게임이 3초 뒤 시작됩니다");
-		startLabel.setBounds(170, 230, 500, 50);
+		// 시작을 나타내는 레이블 설정, 2초 후 게임 시작을 담당하는 GameTimer 초기화
+		startLabel = new JLabel("게임이 잠시 후 시작됩니다");
+		startLabel.setBounds(160, 230, 500, 50);
 		startLabel.setFont(new Font("맑은고딕", Font.BOLD, 40));
 		getContentPane().setLayout(null);
 		getContentPane().add(startLabel);
@@ -148,6 +148,7 @@ public class _03GameUI extends JFrame {
 				resetTimerLabel();
 				t_input.setEnabled(true);
 				t_input.setText("");
+				t_input.requestFocusInWindow();
 			}
 		});
 
@@ -221,12 +222,12 @@ public class _03GameUI extends JFrame {
 		@Override
 		public void run() {
 			try {
-				sleep(3000); // 게임 시작 3초 대기
+				sleep(2000); // 게임 시작 2초 대기
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			// 3초 대기 후 게임 시작
+			// 2초 대기 후 게임 시작
 			startLabel.setVisible(false); // 시작 레이블 숨김
 			startGame(); // 게임 시작
 		}
@@ -377,32 +378,32 @@ public class _03GameUI extends JFrame {
 		case 1:
 		case 2:
 		case 3:
-			num1 = rand.nextInt(20) + 1;
-			num2 = rand.nextInt(15) + 1;
+			num1 = rand.nextInt(10) + 5;
+			num2 = rand.nextInt(6) + 1;
 			String[] operators1 = { "+", "-" };
 			operator = operators1[rand.nextInt(operators1.length)];
 			break;
 		// 레벨 4~5
 		case 4:
 		case 5:
-			num1 = rand.nextInt(12) + 2;
-			num2 = rand.nextInt(10) + 2;
+			num1 = rand.nextInt(10) + 2;
+			num2 = rand.nextInt(9) + 2;
 			operator = "*";
 			break;
 		// 레벨 6~8
 		case 6:
 		case 7:
 		case 8:
-			num1 = rand.nextInt(500) + 100;
-			num2 = rand.nextInt(500) + 100;
+			num1 = rand.nextInt(30) + 20;
+			num2 = rand.nextInt(20) + 10;
 			String[] operators2 = { "+", "-" };
 			operator = operators2[rand.nextInt(operators2.length)];
 			break;
 		// 레벨 9~10
 		case 9:
 		case 10:
-			num1 = rand.nextInt(45) + 10;
-			num2 = rand.nextInt(45) + 10;
+			num1 = rand.nextInt(20) + 10;
+			num2 = rand.nextInt(10) + 1;
 			String[] operators3 = { "*", "/" };
 			operator = operators3[rand.nextInt(operators3.length)];
 			List<Integer> excludedNumbers = Arrays.asList(0, 1, 2, 3, 5, 7, 10);

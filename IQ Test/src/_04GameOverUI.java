@@ -3,6 +3,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 
 
 public class _04GameOverUI extends JFrame {
@@ -28,8 +28,10 @@ public class _04GameOverUI extends JFrame {
 
 	public _04GameOverUI() {
 		super("게임 종료 화면 구성");
+		
 		musicPlayer = new BackgroundMusicPlayer();
 		musicPlayer.playBackgroundMusic();
+		
 		ImageIcon soundOnIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOn.png"));
 		ImageIcon soundOffIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOff.png"));
 
@@ -66,6 +68,11 @@ public class _04GameOverUI extends JFrame {
 		add(musicButton);
 		// 메서드 호출
 		buildGUI(_03GameUI.getCurrentLevel());
+		
+		// 이미지를 표시할 패널 생성
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/Gameoverpic.jpg");
+		backgroundPanel.setSize(new Dimension(800, 600)); // 크기 설정
+		add(backgroundPanel); // 프레임에 추가
 
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,23 +80,38 @@ public class _04GameOverUI extends JFrame {
 		setResizable(false);
 		setVisible(true);
 	}
+	
+	// 프로그램 이미지 바탕화면 클래스
+	public class ImagePanel extends JPanel {
+	    private ImageIcon imageIcon;
+
+	    public ImagePanel(String imagePath) {
+	        imageIcon = new ImageIcon(getClass().getResource(imagePath));
+	        setPreferredSize(new Dimension(imageIcon.getIconWidth(), imageIcon.getIconHeight())); // 이미지 크기에 맞게 Panel 크기 설정
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+	    }
+	}
 
 
 	// UI 요소를 구성하는 메서드 호출
 	private void buildGUI(int level) {
-		add(createDisplayPanel()); // 텍스트 표시 패널 생성 및 추가
-		add(createResultPanel(level)); // 최종 결과 표시 패널 생성 및 추가
-		add(createInputPanel(), BorderLayout.SOUTH); // 입력 패널 생성 및 하단에 추가
+	    createResultPanel(level); // 최종 결과 표시 패널 생성 및 추가
+	    add(createInputPanel(), BorderLayout.SOUTH); // 입력 패널 생성 및 하단에 추가
 	}
 
 
-	// 텍스트 표시 패널 메서드
-	private JPanel createDisplayPanel() {
-		JPanel p = new JPanel(null);
-		t_display = new JTextArea();
-		t_display.setEditable(false);
-		return p;
-	}
+//	// 텍스트 표시 패널 메서드
+//	private JPanel createDisplayPanel() {
+//		JPanel p = new JPanel(null);
+//		t_display = new JTextArea();
+//		t_display.setEditable(false);
+//		return p;
+//	}
 
 
 	// 입력 버튼 메서드
@@ -117,7 +139,6 @@ public class _04GameOverUI extends JFrame {
 			}
 		});
 		// 버튼 크기 설정, 패널 추가
-		pack();
 		b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
 		b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));
 		p.add(b_restart);
@@ -132,23 +153,21 @@ public class _04GameOverUI extends JFrame {
 
 
 	// 최종 결과를 보여주는 패널 생성
-	private JPanel createResultPanel(int level) {
-		JPanel p = new JPanel(null);
-		resultNum = new JLabel("최종 점수: " + level + " 점");
-		resultStr = new JLabel(getResultMessage(level));
+	private void createResultPanel(int level) {
+	    resultNum = new JLabel("최종 점수: " + level + " 점");
+	    resultStr = new JLabel(getResultMessage(level));
 
-		// 라벨 폰트, 위치 설정
-		resultNum.setFont(new Font("굴림", Font.BOLD, 35));
-		resultStr.setFont(new Font("굴림", Font.BOLD, 23));
-		resultNum.setHorizontalAlignment(SwingConstants.CENTER);
-		resultStr.setHorizontalAlignment(SwingConstants.CENTER);
-		resultNum.setBounds(149, 209, 471, 87);
-		resultStr.setBounds(159, 288, 453, 63);
+	    // 라벨 폰트 설정
+	    resultNum.setFont(new Font("굴림", Font.BOLD, 35));
+	    resultStr.setFont(new Font("굴림", Font.BOLD, 23));
 
-		// 라벨 추가
-		p.add(resultNum);
-		p.add(resultStr);
-		return p;
+	    // 라벨 위치 설정 (using setBounds)
+	    resultNum.setBounds(480, 100, 500, 50);
+	    resultStr.setBounds(480, 150, 500, 50);
+	  
+	    // 라벨 추가
+	    add(resultNum);
+	    add(resultStr);
 	}
 
 
