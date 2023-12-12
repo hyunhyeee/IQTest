@@ -1,4 +1,5 @@
 // 03. 게임 진행 화면
+// 산술 문제
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,7 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 
-public class _03GameUI extends JFrame {
+public class _03_0GameUI extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result, t_input;
@@ -46,7 +47,7 @@ public class _03GameUI extends JFrame {
 	public JButton musicButton;
 
 
-	public _03GameUI() {
+	public _03_0GameUI() {
 		// JFrame 설정
 		super("게임 메인 화면 구성");
 		musicPlayer = new BackgroundMusicPlayer();
@@ -502,6 +503,6 @@ public class _03GameUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new _03GameUI(); // 객체 생성
+		new _03_0GameUI(); // 객체 생성
 	}
 }

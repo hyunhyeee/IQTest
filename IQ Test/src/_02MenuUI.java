@@ -98,7 +98,7 @@ public class _02MenuUI extends JFrame {
 		btn1.addActionListener(new ActionListener() { // 버튼 클릭 시 동작 설정
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_03GameUI T_Frame = new _03GameUI();
+				_03_0GameUI T_Frame = new _03_0GameUI();
 				T_Frame.setVisible(true); // _03GameUI 보이도록 설정
 				dispose(); // 현재 창 닫기
 			}

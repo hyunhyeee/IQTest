@@ -67,7 +67,7 @@ public class _04GameOverUI extends JFrame {
 
 		add(musicButton);
 		// 메서드 호출
-		buildGUI(_03GameUI.getCurrentLevel());
+		buildGUI(_03_0GameUI.getCurrentLevel());
 		
 		// 이미지를 표시할 패널 생성
 		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/Gameoverpic.jpg");
@@ -122,7 +122,7 @@ public class _04GameOverUI extends JFrame {
 		b_restart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_03GameUI newGameUI = new _03GameUI();
+				_03_0GameUI newGameUI = new _03_0GameUI();
 				newGameUI.setVisible(true);
 				dispose();
 			}
