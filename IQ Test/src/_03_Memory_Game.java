@@ -32,8 +32,11 @@ public class _03_Memory_Game extends JFrame {
 	private GameTimer gameTimer;
 	private Timer timer, wordTimer;
 	private LevelBar levelBar;
-	private int[] usedWordIndices = new int[3]; // 최대 3개의 단어 인덱스를 저장하는 배열
+	private int count = 15;
+	private static int currentLevel = 1;
 
+	private boolean isCorrect;
+	private int[] usedWordIndices = new int[3]; // 최대 3개의 단어 인덱스를 저장하는 배열
 	private HashSet<Integer> usedWord = new HashSet<>(); // 이미 사용된 단어의 인덱스를 추적할 HashSet
 	private String[] words = { "사과", "포도", "나라", "고향", "도마", "과자", "손주", "아들", "부모", "이불", "침대",
 	                "안경", "비행기", "자동차", "효자손", "옷걸이", "손잡이", "충전기", "비둘기", "손수건", "선풍기", "귀성길",
@@ -41,16 +44,12 @@ public class _03_Memory_Game extends JFrame {
 	                "하모니카", "정월대보름", "지구온난화", "광개토대왕", "공기청정기", "장수하늘소", "종이비행기", "국제우주정거장",
 	                "공동경비구역", "고속버스터미널", "주택청약통장", "아이스아메리카노", "동대문역사문화공원역" };
 
-	private int count = 15;
-	private static int currentLevel = 1;
-
 	public BackgroundMusicPlayer musicPlayer;
-	private boolean isCorrect;
 
 
 	public _03_Memory_Game() {
 		// JFrame 설정
-		super("기억 능력 검사");
+		super("단어 암기 테스트");
 		musicPlayer = new BackgroundMusicPlayer();
 		musicPlayer.playBackgroundMusic();
 		setSize(800, 600);
@@ -131,7 +130,6 @@ public class _03_Memory_Game extends JFrame {
 		b_levelComplete.setBounds(560, 380, 150, 60);
 		b_levelComplete.setVisible(false); // 처음에는 보이지 않도록 설정
 		getContentPane().add(b_levelComplete);
-		b_levelComplete.setEnabled(false);
 
 		b_levelComplete.addActionListener(new ActionListener() {
 			@Override
@@ -140,12 +138,11 @@ public class _03_Memory_Game extends JFrame {
 				currentLevel++;
 				updateLevel(currentLevel);
 				levelTable(currentLevel);
-				// b_levelComplete.setEnabled(false);
 				b_levelComplete.setVisible(false);
+				b_send.setEnabled(false);// 기능 활성화
 				wordTimer.restart();
 				resetTimerLabel();
 
-				b_send.setEnabled(false);// 기능 활성화
 			}
 		});
 
@@ -165,7 +162,7 @@ public class _03_Memory_Game extends JFrame {
 
 		b_send.addActionListener(sendActionListener);
 		b_send.setBounds(560, 380, 150, 60);// 위치 설정
-		b_send.setEnabled(false);// 기능 활성화
+		b_send.setEnabled(false);// 기능 비활성화
 		add(b_send);// 화면에 추가
 
 		// 화면 구성 메소드 호출
@@ -331,11 +328,6 @@ public class _03_Memory_Game extends JFrame {
 
 
 	private void displayWord() {
-		// Random rand = new Random();
-		// usedWordIndices[0] = getRandomIndex(rand);
-		// usedWordIndices[1] = getRandomIndex(rand);
-		// usedWordIndices[2] = getRandomIndex(rand);
-
 		word01.setText(words[usedWordIndices[0]]);
 		word02.setText(words[usedWordIndices[1]]);
 		word03.setText(words[usedWordIndices[2]]);
@@ -379,7 +371,8 @@ public class _03_Memory_Game extends JFrame {
 		word02.setEditable(true);
 		word03.setEditable(true);
 
-		b_send.setEnabled(true);
+		b_send.setEnabled(true); // 버튼 활성화
+
 		word01.requestFocusInWindow(); // 포커스 설정
 		word01.addActionListener(e -> word02.requestFocusInWindow());
 		word02.addActionListener(e -> word03.requestFocusInWindow());
@@ -388,21 +381,6 @@ public class _03_Memory_Game extends JFrame {
 
 
 	private boolean checkIfCorrect(String answer1, String answer2, String answer3) {
-		// // 사용자가 입력한 값들을 HashSet에 담기
-		// HashSet<String> userAnswers = new HashSet<>();
-		// userAnswers.add(answer1);
-		// userAnswers.add(answer2);
-		// userAnswers.add(answer3);
-		//
-		// // 정답들을 HashSet에 담기
-		// HashSet<String> correctAnswers = new HashSet<>();
-		// correctAnswers.add(words[usedWord.toArray(new Integer[0])[0]]);
-		// correctAnswers.add(words[usedWord.toArray(new Integer[0])[1]]);
-		// correctAnswers.add(words[usedWord.toArray(new Integer[0])[2]]);
-		//
-		// // 정답들과 사용자 입력 값들을 비교하여 일치 여부 반환
-		// return correctAnswers.equals(userAnswers);
-
 		// 사용자가 입력한 값들을 HashSet에 담기
 		HashSet<String> userAnswers = new HashSet<>();
 		userAnswers.add(answer1);
@@ -417,14 +395,6 @@ public class _03_Memory_Game extends JFrame {
 
 		// 정답들과 사용자 입력 값들을 비교하여 일치 여부 반환
 		return correctAnswers.equals(userAnswers);
-
-		// String correctAnswer1 = word01.getText();
-		// String correctAnswer2 = word02.getText();
-		// String correctAnswer3 = word03.getText();
-		//
-		// return answer1.equals(correctAnswer1)
-		// && answer2.equals(correctAnswer2)
-		// && answer3.equals(correctAnswer3);
 	}
 
 
@@ -439,9 +409,7 @@ public class _03_Memory_Game extends JFrame {
 
 		if (isCorrect) {
 			// 정답일 때
-			b_levelComplete.setEnabled(true);
 			b_levelComplete.setVisible(true);
-			b_result.setEnabled(false);
 			b_result.setVisible(false);
 
 			word01.setEditable(false);
@@ -465,15 +433,15 @@ public class _03_Memory_Game extends JFrame {
 	private void gameOver() {
 		startLabel.setVisible(false); // 시작 레이블 숨기기
 		timer.stop(); // 타이머 정지
+
 		word01.setEnabled(false); // 입력 필드 비활성화
 		word02.setEnabled(false);
 		word03.setEnabled(false);
+
 		b_result.setVisible(true);
-		b_result.setEnabled(true);
-		b_send.setEnabled(false);
 		b_send.setVisible(false);
-		b_levelComplete.setEnabled(false);
 		b_levelComplete.setVisible(false);
+
 		b_result.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
