@@ -70,7 +70,7 @@ public class _04_Calc_Gameover extends JFrame {
 		buildGUI(_03_Calc_Game.getCurrentLevel());
 		
 		// 이미지를 표시할 패널 생성
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/calc_Gameover.jpg");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/calc_Gameover.png");
 		backgroundPanel.setSize(new Dimension(800, 600)); // 크기 설정
 		add(backgroundPanel); // 프레임에 추가
 
@@ -101,7 +101,7 @@ public class _04_Calc_Gameover extends JFrame {
 	// UI 요소를 구성하는 메서드 호출
 	private void buildGUI(int level) {
 	    createResultPanel(level); // 최종 결과 표시 패널 생성 및 추가
-	    add(createInputPanel(), BorderLayout.SOUTH); // 입력 패널 생성 및 하단에 추가
+	    createInputPanel(); // 입력 패널 생성 및 하단에 추가
 	}
 
 
@@ -115,10 +115,8 @@ public class _04_Calc_Gameover extends JFrame {
 
 
 	// 입력 버튼 메서드
-	private JPanel createInputPanel() {
-		JPanel p = new JPanel(new GridLayout());
+	private void createInputPanel() {
 		JButton b_restart = new JButton("재시작하기");
-		// "재시작하기" 버튼 클릭 시 동작 기능 설정
 		b_restart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -129,7 +127,6 @@ public class _04_Calc_Gameover extends JFrame {
 		});
 
 		JButton b_exit = new JButton("나가기");
-		// "나가기" 버튼 클릭시 동작 기능 설정
 		b_exit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,17 +135,22 @@ public class _04_Calc_Gameover extends JFrame {
 				dispose();
 			}
 		});
-		// 버튼 크기 설정, 패널 추가
-		b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
-		b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));
-		p.add(b_restart);
-		p.add(b_exit);
-
-		// 버튼 폰트 설정
-		Font buttonFont = b_restart.getFont();
-		b_restart.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
-		b_exit.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
-		return p;
+		
+		
+		// 버튼 위치 설정
+		b_restart.setBounds(195, 400, 203, 108);
+		b_restart.setFont(new Font("굴림", Font.BOLD, 20));
+		b_restart.setContentAreaFilled(false); // 배경색 제거
+		b_restart.setBorderPainted(false); // 테두리 없애기
+		b_restart.setFocusPainted(false); // 글씨 테두리 없애기
+		add(b_restart);
+		
+		b_exit.setBounds(483, 400, 203, 108);
+		b_exit.setFont(new Font("굴림", Font.BOLD, 20));
+		b_exit.setContentAreaFilled(false); // 배경색 제거
+		b_exit.setBorderPainted(false); // 테두리 없애기
+		b_exit.setFocusPainted(false); // 글씨 테두리 없애기
+		add(b_exit);
 	}
 
 
@@ -159,11 +161,10 @@ public class _04_Calc_Gameover extends JFrame {
 
 	    // 라벨 폰트 설정
 	    resultNum.setFont(new Font("굴림", Font.BOLD, 35));
-	    resultStr.setFont(new Font("굴림", Font.BOLD, 23));
+	    resultStr.setFont(new Font("굴림", Font.BOLD, 20));
 
-	    // 라벨 위치 설정 (using setBounds)
-	    resultNum.setBounds(480, 100, 500, 50);
-	    resultStr.setBounds(480, 150, 500, 50);
+	    resultNum.setBounds(350, 150, 500, 50);
+	    resultStr.setBounds(350, 200, 500, 50);
 	  
 	    // 라벨 추가
 	    add(resultNum);
