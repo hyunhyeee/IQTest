@@ -113,16 +113,20 @@ public class _04_Memory_Gameover extends JFrame {
 				dispose();
 			}
 		});
-		// 버튼 크기 설정, 패널 추가
-		b_restart.setPreferredSize(new Dimension(b_restart.getPreferredSize().width, 50));
-		b_exit.setPreferredSize(new Dimension(b_exit.getPreferredSize().width, 50));
-		p.add(b_restart);
-		p.add(b_exit);
+		// 버튼 위치 설정
+		b_restart.setBounds(210, 400, 203, 108);
+		b_restart.setFont(new Font("굴림", Font.BOLD, 20));
+		b_restart.setContentAreaFilled(false); // 배경색 제거
+		b_restart.setBorderPainted(false); // 테두리 없애기
+		b_restart.setFocusPainted(false); // 글씨 테두리 없애기
+		add(b_restart);
 
-		// 버튼 폰트 설정
-		Font buttonFont = b_restart.getFont();
-		b_restart.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
-		b_exit.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
+		b_exit.setBounds(500, 400, 203, 108);
+		b_exit.setFont(new Font("굴림", Font.BOLD, 20));
+		b_exit.setContentAreaFilled(false); // 배경색 제거
+		b_exit.setBorderPainted(false); // 테두리 없애기
+		b_exit.setFocusPainted(false); // 글씨 테두리 없애기
+		add(b_exit);
 		return p;
 	}
 
