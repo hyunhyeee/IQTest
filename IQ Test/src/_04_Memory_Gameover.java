@@ -114,7 +114,7 @@ public class _04_Memory_Gameover extends JFrame {
 			}
 		});
 		// 버튼 위치 설정
-		b_restart.setBounds(210, 400, 203, 108);
+		b_restart.setBounds(212, 400, 203, 108);
 		b_restart.setFont(new Font("굴림", Font.BOLD, 20));
 		b_restart.setContentAreaFilled(false); // 배경색 제거
 		b_restart.setBorderPainted(false); // 테두리 없애기
@@ -140,9 +140,9 @@ public class _04_Memory_Gameover extends JFrame {
 		resultNum.setFont(new Font("굴림", Font.BOLD, 35));
 		resultStr.setFont(new Font("굴림", Font.BOLD, 23));
 
-		// 라벨 위치 설정 (using setBounds)
-		resultNum.setBounds(480, 100, 500, 50);
-		resultStr.setBounds(480, 150, 500, 50);
+		// 라벨 위치 설정
+	    resultNum.setBounds(350, 150, 500, 50);
+	    resultStr.setBounds(350, 200, 500, 50);
 
 		// 라벨 추가
 		add(resultNum);
