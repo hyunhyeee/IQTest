@@ -27,8 +27,8 @@ public class _02MenuUI extends JFrame {
 		buildGUI(); // GUI를 구성한 메소드 호출
 		
 		// 라벨 생성 및 설정
-		JLabel title = new JLabel("게임을 선택하세요");
-		title.setBounds(100, 20, 300, 100);
+		JLabel title = new JLabel("능력 검사를 선택하세요");
+		title.setBounds(100, 20, 500, 100);
 		title.setForeground(Color.BLACK);
 
 		Font labelFont = title.getFont();
@@ -75,7 +75,7 @@ public class _02MenuUI extends JFrame {
 		add(musicButton);
 		
 		// 이미지 표시하는 패널 설정
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/menupic.png");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/menu.png");
 		backgroundPanel.setSize(new Dimension(800, 600));
 		add(backgroundPanel);
 		
@@ -94,33 +94,33 @@ public class _02MenuUI extends JFrame {
 
 	// 구성 GUI 메소드, 테스트 문제 버튼
 	private void buildGUI() {
-		JButton btn1 = new JButton("산술문제"); // 버튼 생성
+		JButton btn1 = new JButton("계산 능력 검사"); // 버튼 생성
 		btn1.addActionListener(new ActionListener() { // 버튼 클릭 시 동작 설정
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_03_0GameUI T_Frame = new _03_0GameUI();
+				_03_Calc_Game T_Frame = new _03_Calc_Game();
 				T_Frame.setVisible(true); // _03GameUI 보이도록 설정
 				dispose(); // 현재 창 닫기
 			}
 		});
 
 		// 위에 동일한 설정
-		JButton btn2 = new JButton("속담 맞추기");
-		// btn2.addActionListener(new ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// _03GameUI T_Frame = new _03GameUI();
-		// T_Frame.setVisible(true);
-		// dispose();
-		// }
-		// });
+		JButton btn2 = new JButton("상식 능력 검사"); // 버튼 생성
+		btn2.addActionListener(new ActionListener() { // 버튼 클릭 시 동작 설정
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_03_Knowledge_Game T_Frame = new _03_Knowledge_Game();
+				T_Frame.setVisible(true);
+				dispose(); // 현재 창 닫기
+			}
+		});
 
 		// 위에 동일한 설정
-		JButton btn3 = new JButton("상식 테스트");
+		JButton btn3 = new JButton("기억 능력 검사");
 		// btn3.addActionListener(new ActionListener() {
 		// @Override
 		// public void actionPerformed(ActionEvent e) {
-		// _03GameUI T_Frame = new _03GameUI();
+		// _03_Memory_Game T_Frame = new _03_Memory_Game();
 		// T_Frame.setVisible(true);
 		// dispose();
 		// }

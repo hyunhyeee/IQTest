@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 
-public class _03_0GameUI extends JFrame {
+public class _03_Calc_Game extends JFrame {
 
 	private JTextArea t_display;
 	private JTextField t_operand1, t_operator1, t_operand2, t_operator2, t_result, t_input;
@@ -47,7 +47,7 @@ public class _03_0GameUI extends JFrame {
 	public JButton musicButton;
 
 
-	public _03_0GameUI() {
+	public _03_Calc_Game() {
 		// JFrame 설정
 		super("게임 메인 화면 구성");
 		musicPlayer = new BackgroundMusicPlayer();
@@ -488,7 +488,7 @@ public class _03_0GameUI extends JFrame {
 		finalResultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_04GameOverUI nextClassFrame = new _04GameOverUI();
+				_04_Calc_Gameover nextClassFrame = new _04_Calc_Gameover();
 				nextClassFrame.setVisible(true); // 보이게 표시
 				dispose(); // 현재 창 닫기
 			}
@@ -503,6 +503,6 @@ public class _03_0GameUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new _03_0GameUI(); // 객체 생성
+		new _03_Calc_Game(); // 객체 생성
 	}
 }

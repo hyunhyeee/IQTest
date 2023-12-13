@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
-public class _04GameOverUI extends JFrame {
+public class _04_Calc_Gameover extends JFrame {
 
 	private JTextArea t_display;
 	private JLabel resultNum, resultStr;
@@ -26,7 +26,7 @@ public class _04GameOverUI extends JFrame {
 	public JButton musicButton;
 
 
-	public _04GameOverUI() {
+	public _04_Calc_Gameover() {
 		super("게임 종료 화면 구성");
 		
 		musicPlayer = new BackgroundMusicPlayer();
@@ -67,10 +67,10 @@ public class _04GameOverUI extends JFrame {
 
 		add(musicButton);
 		// 메서드 호출
-		buildGUI(_03_0GameUI.getCurrentLevel());
+		buildGUI(_03_Calc_Game.getCurrentLevel());
 		
 		// 이미지를 표시할 패널 생성
-		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/Gameoverpic.jpg");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/calc_Gameover.jpg");
 		backgroundPanel.setSize(new Dimension(800, 600)); // 크기 설정
 		add(backgroundPanel); // 프레임에 추가
 
@@ -122,7 +122,7 @@ public class _04GameOverUI extends JFrame {
 		b_restart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				_03_0GameUI newGameUI = new _03_0GameUI();
+				_03_Calc_Game newGameUI = new _03_Calc_Game();
 				newGameUI.setVisible(true);
 				dispose();
 			}
@@ -199,6 +199,6 @@ public class _04GameOverUI extends JFrame {
 
 
 	public static void main(String[] args) {
-		new _04GameOverUI(); // 객체 호출
+		new _04_Calc_Gameover(); // 객체 호출
 	}
 }

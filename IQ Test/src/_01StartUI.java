@@ -91,8 +91,7 @@ public class _01StartUI extends JFrame {
 
 		add(musicButton);
 		// 이미지를 표시할 패널 생성
-		ImagePanel backgroundPanel = new ImagePanel(
-		    "/Game_pic/test_pic.jpg");
+		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/gameStart.jpg");
 		backgroundPanel.setSize(new Dimension(800, 600)); // 크기 설정
 
 		add(backgroundPanel); // 프레임에 추가
