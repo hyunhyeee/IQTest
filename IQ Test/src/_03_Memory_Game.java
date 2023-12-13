@@ -446,7 +446,7 @@ public class _03_Memory_Game extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_04_Memory_Gameover nextClassFrame = new _04_Memory_Gameover();
-				// nextClassFrame.setVisible(true); // 보이게 표시
+				nextClassFrame.setVisible(true); // 보이게 표시
 				dispose(); // 현재 창 닫기
 			}
 		});
