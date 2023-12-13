@@ -135,8 +135,7 @@ public class _03_Calc_Game extends JFrame {
 		levelCompleteButton = new JButton("다음->");
 		levelCompleteButton.setBounds(560, 370, 150, 60);
 		getContentPane().add(levelCompleteButton);
-		levelCompleteButton.setEnabled(false);
-
+		levelCompleteButton.setVisible(false);
 		levelCompleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +143,7 @@ public class _03_Calc_Game extends JFrame {
 				currentLevel++;
 				updateLevel(currentLevel);
 				levelTable(currentLevel);
-				levelCompleteButton.setEnabled(false);
+				levelCompleteButton.setVisible(false);
 				timer.restart();
 				resetTimerLabel();
 				t_input.setEnabled(true);
@@ -157,6 +156,8 @@ public class _03_Calc_Game extends JFrame {
 		levelCompleteButton.setFont(new Font(buttonFont.getName(), Font.BOLD, 15));
 
 		t_input = new JTextField(30); // 보내기 입력창 설정
+		t_input.setFont(new Font("굴림", Font.PLAIN, 30));
+		t_input.setHorizontalAlignment(SwingConstants.LEFT);
 		JButton b_send = new JButton("보내기"); // "보내기" 버튼 설정
 
 		ActionListener sendActionListener = new ActionListener() {
@@ -172,16 +173,18 @@ public class _03_Calc_Game extends JFrame {
 		t_input.addActionListener(sendActionListener); // 엔터 키 입력 처리
 
 		// 위치 설정
-		t_input.setBounds(0, 522, 692, 45);
-		b_send.setBounds(690, 522, 100, 45);
+		t_input.setBounds(200, 370, 200, 60);
+		b_send.setBounds(560, 370, 150, 60);
 
 		// 화면에 추가
 		add(t_input);
 		add(b_send);
 
-		// 기능 황성화
+		// 기능 활성화
 		t_input.setEnabled(true);
-		b_send.setEnabled(true);
+
+		// 처음에는 보이게 설정
+		b_send.setVisible(true);
 
 		t_input.requestFocusInWindow();
 		// 화면 구성 메소드 호출
@@ -438,12 +441,13 @@ public class _03_Calc_Game extends JFrame {
 		if (userAnswer == correctAnswer) { // 10단계 클리어시 최종화면 버튼 활성화
 			if (getCurrentLevel() == 10) {
 				gameOver();
-			} else { // 오답시 최종화면 버튼 활성화
-				levelCompleteButton.setEnabled(true);
+			} else {
+				levelCompleteButton.setVisible(true);
 				t_input.setEnabled(false);
 			}
 
 		} else {
+			// 오답시 최종화면 버튼 활성화
 			gameOver();
 		}
 
