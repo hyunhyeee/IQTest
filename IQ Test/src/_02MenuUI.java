@@ -25,7 +25,7 @@ public class _02MenuUI extends JFrame {
 	public _02MenuUI() {
 
 		buildGUI(); // GUI를 구성한 메소드 호출
-		
+
 		// 라벨 생성 및 설정
 		JLabel title = new JLabel("능력 검사를 선택하세요");
 		title.setBounds(100, 20, 500, 100);
@@ -37,8 +37,7 @@ public class _02MenuUI extends JFrame {
 
 		musicPlayer = new BackgroundMusicPlayer();
 		musicPlayer.playBackgroundMusic();
-		
-		
+
 		ImageIcon soundOnIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOn.png"));
 		ImageIcon soundOffIcon = new ImageIcon(getClass().getResource("/Game_pic/soundOff.png"));
 
@@ -73,13 +72,12 @@ public class _02MenuUI extends JFrame {
 		musicButton.setFocusPainted(false); // 글씨 테두리 없애기
 
 		add(musicButton);
-		
+
 		// 이미지 표시하는 패널 설정
 		ImagePanel backgroundPanel = new ImagePanel("/Game_pic/menu.png");
 		backgroundPanel.setSize(new Dimension(800, 600));
 		add(backgroundPanel);
-		
-		
+
 		setTitle("메뉴 화면 구성"); // 타이틀 설정
 		setSize(800, 600); // 크기 설정
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 닫기 설정
@@ -87,7 +85,6 @@ public class _02MenuUI extends JFrame {
 		setLocationRelativeTo(null); // 중앙에 배치
 		setResizable(false); // 크기 변경 불가능하게 설정
 		setVisible(true); // 보이도록 설정
-
 
 	}
 
@@ -117,14 +114,14 @@ public class _02MenuUI extends JFrame {
 
 		// 위에 동일한 설정
 		JButton btn3 = new JButton("기억 능력 검사");
-		// btn3.addActionListener(new ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// _03_Memory_Game T_Frame = new _03_Memory_Game();
-		// T_Frame.setVisible(true);
-		// dispose();
-		// }
-		// });
+		btn3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_03_Memory_Game T_Frame = new _03_Memory_Game();
+				T_Frame.setVisible(true);
+				dispose();
+			}
+		});
 
 		// 버튼 위치 설정
 		btn1.setBounds(46, 128, 188, 130);
@@ -132,13 +129,13 @@ public class _02MenuUI extends JFrame {
 		btn1.setBorderPainted(false); // 테두리 없애기
 		btn1.setFocusPainted(false); // 글씨 테두리 없애기
 		add(btn1);
-		
+
 		btn2.setBounds(280, 135, 200, 140);
 		btn2.setContentAreaFilled(false); // 배경색 제거
 		btn2.setBorderPainted(false); // 테두리 없애기
 		btn2.setFocusPainted(false); // 글씨 테두리 없애기
 		add(btn2);
-		
+
 		btn3.setBounds(530, 135, 210, 125);
 		btn3.setContentAreaFilled(false); // 배경색 제거
 		btn3.setBorderPainted(false); // 테두리 없애기
